@@ -12,7 +12,7 @@ a {
 label {
   margin: 10px;
   cursor: pointer;
-  width: 30px;
+  width: 60px;
 }
 
 input[type=radio]:checked + label>svg {
