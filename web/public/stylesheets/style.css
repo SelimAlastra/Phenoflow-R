@@ -9,6 +9,23 @@ a {
   color: #34BE82;
 }
 
+a:hover {
+  cursor: pointer;
+  font-weight: 30px;
+  color: #1b583e;
+}
+
+.gif{
+  margin: 30px;
+  border-radius: 2%;
+}
+
+.img{
+  border-radius: 5%;
+}
+
+
+
 label {
   margin: 10px;
   cursor: pointer;
@@ -130,4 +147,8 @@ input[type=radio]:checked + label>div {
 
 .homePageBtn{
   margin: 5px;
+}
+
+.footerP{
+  padding-top: 6px;
 }
