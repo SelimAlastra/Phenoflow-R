@@ -1,12 +1,10 @@
 extends layout
 
 block preheader
-  div(class="container")
-    div(class="row align-items-center")
-      div(class="col")
-        h2(style="margin-top: 10px; margin-bottom: 10px;") #{title}
-      div(class="col d-flex justify-content-center")
-        a(href="/phenoflow/phenotype/download" class="a-button") VIEW AN EXAMPLE
+  .container.preheaderContainer
+    h2.pageTitle(style="margin-top: 10px; margin-bottom: 10px;") #{title}
+    a.btn.btn-outline-success.homePageBtn(href="/phenoflow/phenotype/download") VIEW AN EXAMPLE
+
 
 block content
 

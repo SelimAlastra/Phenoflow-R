@@ -1,0 +1,38 @@
+.navbar-light .navbar-brand {
+
+    font-weight: bolder;
+    font-size: 38px;
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke-color: #34BE82;
+    -webkit-text-stroke-width: 1.20px; 
+    margin-left: 15px;
+}
+
+.navbar-light .navbar-brand:hover {
+
+    font-weight: bolder;
+    font-size: 38px;
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke-color: #34BE82;
+    -webkit-text-stroke-width: 1.2px; 
+    margin-left: 15px;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 1000;
+    color: white;
+    margin-left: 15px;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 1000;
+    color: rgba(245, 245, 245, 0.918);
+    margin-left: 15px;
+}
+
+.navbar {
+    background-color: #34BE82;
+    margin-bottom: 30px;
+}
