@@ -8,16 +8,16 @@ block preheader
 
 block content
 
-  div(class="container" style="margin-top: 100px;")
-    div(class="row")
-      div(class="col")
-        h6 How do we achieve phenotype portability?
+  hr
+  h5 How do we achieve phenotype portability?
+  hr
+  br
 
   div(class="container" style="margin-top: 20px;")
     div(class="row align-items-center")
       div(class="col")
         a(href="/phenoflow/phenotype/all/")
-          img(src="/phenoflow/images/run.png" class="box")
+          img(src="/phenoflow/images/run.png" class="box" style="width: 500px;")
       div(class="col index-box")
         | Download and immediately execute a phenotype against a local dataset.
     div(class="row")
@@ -26,7 +26,7 @@ block content
     div(class="row align-items-center")
       div(class="col")
         a(href="/phenoflow/phenotype/all/")
-          img(src="/phenoflow/images/view.png" class="box")
+          img(src="/phenoflow/images/view.png" class="box" style="width: 500px;")
       div(class="col index-box")
           | Browse phenotypes represented in a standard format. <a href="/phenoflow/phenotype/all/">#{count}</a> phenotypes are currently available.
     div(class="row")
@@ -35,7 +35,7 @@ block content
     div(class="row align-items-center")
       div(class="col")
         a(href="/phenoflow/phenotype/all/")
-          img(src="/phenoflow/images/custom.png" class="box")
+          img(src="/phenoflow/images/custom.png" class="box" style="width: 500px;")
       div(class="col index-box")
         | Find and customise existing phenotypes, for local requirements.
     div(class="row")
@@ -44,7 +44,7 @@ block content
     div(class="row align-items-center")
       div(class="col")
         a(href="/phenoflow/phenotype/define")
-          img(src="/phenoflow/images/define.png" class="box")
+          img(src="/phenoflow/images/define.png" class="box" style="width: 500px;")
       div(class="col index-box")
         | Graphically author new phenotypes.
     div(class="row d-flex align-items-center")
@@ -52,13 +52,12 @@ block content
         p
           | Phenotype execution only has two dependencies: <a href="https://github.com/common-workflow-language/cwltool">cwltool</a> and <a href="https://docs.docker.com/get-docker/">docker</a>.
         p
-          img(src="/phenoflow/images/run.gif")
+          img(src="/phenoflow/images/run.gif").gif
   
-  a(id="why")
-  div(class="container" style="margin-top: 100px;")
-    div(class="row")
-      div(class="col")
-        h6 Why does phenotype portability matter?
+  hr
+  h5 Why does phenotype portability matter?
+  hr
+  br
 
   div(class="container" style="margin-top: 20px;")
     div(class="row align-items-center")
@@ -88,7 +87,9 @@ block content
             | Validation
       div(class="col index-box")
         | Trust in a phenotype definition is increased by validating it against multiple data sources, such as EHR repositories. By integrating with multiple data source formats, such as i2b2 and OMOP, Phenoflow enables this validation to take place.
-
+  
+  br
+  
   div(class="container" style="margin-top: 20px;")
     div(class="row")
       div()
