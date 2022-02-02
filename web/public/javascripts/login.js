@@ -37,20 +37,27 @@ function getExpiration() {
 
 function login() {
 
-  const user = document.getElementsByClassName("username")[0].value;
-  const password = document.getElementsByClassName("password")[0].value;
+  const user = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
   if(username && password) sendPostRequest("login", JSON.stringify({"user":user, "password":password}), function(authResult) {
 
     if(authResult) {
       setSession(JSON.parse(authResult));
       localStorage.setItem("user", user);
-      document.getElementsByClassName("username")[0].value = "";
-      document.getElementsByClassName("password")[0].value = "";
+      document.getElementById("authCheck").innerHTML = ""
+      document.getElementById("username").value = "";
+      document.getElementById("password").value = "";
       for(let authentication of document.getElementsByClassName("authentication")) authentication.style.display = "none";
       for(let restricted of document.getElementsByClassName("restricted")) restricted.style.display = "inherit";
       if(typeof postLogin === "function") postLogin();
     }
+      
+    else {
+      console.log(user)
+      document.getElementById("authCheck").innerHTML = "Wrong username or password, try again !"
+      return false;
+    }
 
   });
-
 }

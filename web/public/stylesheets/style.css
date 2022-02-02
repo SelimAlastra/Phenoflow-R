@@ -217,3 +217,8 @@ input[type=radio]:checked + label>div {
   margin-top: 10px
 }
 
+.authCheck{
+  color: red;
+  align-items: center;
+  text-align: center;
+}
