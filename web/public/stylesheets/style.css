@@ -24,14 +24,6 @@ a:hover {
   border-radius: 5%;
 }
 
-
-
-label {
-  margin: 10px;
-  cursor: pointer;
-  width: 60px;
-}
-
 input[type=radio]:checked + label>svg {
   color: #34BE82!important;
 }
@@ -141,6 +133,7 @@ input[type=radio]:checked + label>div {
   margin: 25px;
   color: #34BE82;
 }
+
 .preheaderContainer{
   text-align: center;
 }
@@ -153,3 +146,43 @@ input[type=radio]:checked + label>div {
   padding-top: 6px;
 }
 
+.dateForm {
+  margin: 2px;
+  margin-left: 10px
+}
+
+.codesInput {
+  margin: 2px;
+  margin-left: 10px
+}
+
+.form-control{
+  margin : 10px
+}
+
+.formContainer{
+  align-items: center;
+  text-align: center;
+}
+
+.formBtn{
+  min-width: 200px;
+  margin: 15px
+}
+
+.form-check-input {
+  width: 60px;
+  color: #34BE82;
+  border: 1px solid #34BE82;
+}
+
+.form-check-input:checked {
+  background-color: #34BE82;
+  border-color: #34BE82;
+}
+
+.setUpTable{
+  text-align: center;
+  align-items: center;
+  align-content: center;
+}
