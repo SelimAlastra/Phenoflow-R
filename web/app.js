@@ -47,6 +47,7 @@ require('dotenv').config()
 const models = require("./models");
 const index = require("./routes");
 const prototype = require("./routes/prototype");
+const setUp = require("./routes/setUp");
 const login = require("./routes/login");
 const workflow = require("./routes/workflow");
 const step = require("./routes/step");
@@ -72,6 +73,7 @@ app.use("/phenoflow", express.static(path.join(__dirname, "public")));
 const router = express.Router();
 router.use("/", index);
 router.use("/prototype", prototype);
+router.use("/setUp", setUp)
 router.use("/login", login);
 router.use("/phenotype", workflow);
 router.use("/step", step);
