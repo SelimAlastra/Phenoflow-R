@@ -115,7 +115,7 @@ input[type=radio]:checked + label>div {
 
 #page-container {
   position: relative;
-  min-height: 82vh;
+  min-height: 89.5vh;
 }
 
 #content-wrap {
@@ -152,3 +152,4 @@ input[type=radio]:checked + label>div {
 .footerP{
   padding-top: 6px;
 }
+
