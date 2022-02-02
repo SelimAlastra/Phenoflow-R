@@ -1,0 +1,246 @@
+extends layout
+
+block content
+    .container
+        h2.pageTitle Phenoflow prototype
+        .container
+            br
+            hr
+            h3 How it works ?
+            hr
+            br
+            p This a prototype of the Phenoflow desktop version. You can try to "identify clinically equivalent research-grade patient cohorts capturing a particular disease " depending on patient phenotype attributes. This process is also called "EHR-based phenotyping"
+            p The prototype only supports 2 phenotypes for the moment : Rosacea and Abdominal-Aortic-Aneurysm (AAA)
+            p Moreover, this version only supports an output for an unique patient. If you are interested in trying this on multiple patients and other phenotypes, check out the desktop version. You can find more information on the Set Up page.
+            br
+            hr
+            h3 Rosacea example
+            hr
+            br
+            h5 Please enter patient details:
+            br
+            - let patient1 = {birthDate : new Date(), codes : new String(), lastE : new Date()}
+            form.needs-validation#frm(novalidate='' onsubmit="return false")
+                .form-group
+                    label(for='birthDate') Birthdate
+                    input#birthDate.form-control(type='date' name='birthDate' required ="")
+                    .invalid-feedback
+                        | Please insert a birth date.
+                br
+                .form-group
+                    label(for='lastE') Last-encouterdate
+                    input#lastE.form-control(type='date' name='lastE' required ="") 
+                    .invalid-feedback
+                        | Please insert the last encounter date.
+                br 
+                .form-group
+                    label(for='codes') Patient codes
+                    input#codes.form-control(type='text' name='codes' required ="") 
+                    .invalid-feedback
+                        | Please insert the patient codes. 
+                br
+                p Codelist: ICD-10 (International Classification of Diseases 10)
+                p Please separate each code with a comma ","
+                br
+                .container.formContainer
+                    button(onclick='rosaceaOutput()').btn.btn-outline-success.formBtn(type='submit') Try it !
+                
+
+            h5#RosaceaOutputTitle
+            br
+            p#primaryText
+            p#secondaryText
+
+            br
+            h5 Rosacea codes dictionary
+            table.table.table-sm
+                thead
+                    tr
+                    th(scope='col') #
+                    th(scope='col') Code 
+                    th(scope='col') Meaning
+                tbody
+                    tr
+                        th(scope='row') 1
+                        td F4C3100
+                        td Rosacea conjunctivitis
+                    tr
+                        th(scope='row') 2
+                        td M153000
+                        td Acne rosacea
+                    tr
+                        th(scope='row') 3
+                        td M153100
+                        td Rhinophyma
+                    tr
+                        th(scope='row') 4
+                        td M153200
+                        td Rosacea hypertrophica
+                    tr
+                        th(scope='row') 5
+                        td M153300
+                        td Lupoid rosacea
+                    tr
+                        th(scope='row') 6
+                        td M153400
+                        td Ocular rosacea
+
+                    tr
+                        th(scope='row') 7
+                        td M153.00
+                        td Rosacea
+                    tr
+                        th(scope='row') 8
+                        td M153z00
+                        td Rosacea NOS
+                    tr
+                        th(scope='row') 9
+                        td Myu6900
+                        td Other rosacea
+                    tr
+                        th(scope='row') 10
+                        td L71.1
+                        td Rhinophyma
+                    tr
+                        th(scope='row') 11
+                        td L71.8
+                        td Other rosacea
+                    tr
+                        th(scope='row') 12
+                        td L71.9
+                        td Rosacea, unspecified
+        
+            br
+            hr
+            h3 Abdominal-aortic-aneurysm (AAA) example 
+            hr
+            br
+            h5 Please enter patient details:
+            br
+        
+            - let patient2 = {birthDate2 : new Date(), codes2 : new String(), lastE2 : new Date()}
+            form.needs-validation#frm(novalidate='' onsubmit="return false")
+                .form-group
+                    label(for='birthDate2') Birthdate
+                    input#birthDate2.form-control(type='date', name='birthDate2'  required ="")
+                    .invalid-feedback
+                        | Please insert a birth date.
+                br
+                .form-group
+                    label(for='lastE2') Last encounter date
+                    input#lastE2.form-control(type='date', name='lastE2'  required ="")
+                    .invalid-feedback
+                        | Please insert the last encounter date.
+                br 
+                .form-group
+                    label(for='codes2') Patient codes
+                    input#codes2.form-control(type='text' name ='codes2' placeholder='Insert the patient codes here...' required ="")
+                    .invalid-feedback
+                        | Please insert the patient codes. 
+                br
+                p Codelists : ICD-9 (International Classification of Diseases 9) and CPT (Current Procedural Terminology)
+                p Please separate each code with a comma ","
+                br
+                .container.formContainer
+                    button(onclick='AAAOutput()').btn.btn-outline-success.formBtn(type='submit') Try it !
+                
+            h5#AAAOutputTitle
+            br
+            p#aText
+            p#bText
+            p#cText 
+            p#dText
+            p#eText
+            p#fText
+            p#ageExclusion
+            p#lastEncounterExclusion
+
+            br
+            h5 Abdominal-aortic-aneurysm codes dictionary
+
+            table.table.table-sm
+                    thead
+                        tr
+                        th(scope='col') #
+                        th(scope='col') Code 
+                        th(scope='col') Meaning
+                    tbody
+                        tr
+                            th(scope='row') 1
+                            td 34800
+                            td Endovascular repair of infrarenal abdominal aortic aneurysm or dissection; using aorto‐ aortic tube prosthesis
+                        tr
+                            th(scope='row') 2
+                            td 34802
+                            td Endovascular repair of infrarenal abdominal aortic aneurysm or dissection; using modular bifurcated prosthesis (1 docking limb)
+                        tr
+                            th(scope='row') 3
+                            td 34803
+                            td Endovascular repair of infrarenal abdominal aortic aneurysm or dissection; using modular bifurcated prosthesis (2 docking limbs)
+                        tr
+                            th(scope='row') 4
+                            td 34804
+                            td Endovascular repair of infrarenal abdominal aortic aneurysm or dissection; using unibody bifurcated prosthesis
+                        tr
+                            th(scope='row') 5
+                            td 34805
+                            td Endovascular repair of infrarenal abdominal aortic aneurysm or dissection; using aorto‐ uniiliac or aorto‐unifemoral prosthesis
+                        tr
+                            th(scope='row') 6
+                            td 34830
+                            td Open repair of infrarenal aortic aneurysm or dissection, plus repair of associated arterial trauma, following unsuccessful endovascular repair; tube prosthesis
+                        tr
+                            th(scope='row') 7
+                            td 34831
+                            td Open repair of infrarenal aortic aneurysm or dissection, plus repair of associated arterial trauma, following unsuccessful endovascular repair; aorto‐bi‐iliac prosthesis
+                        tr
+                            th(scope='row') 8
+                            td 34832
+                            td Open repair of infrarenal aortic aneurysm or dissection, plus repair of associated arterial trauma, following unsuccessful endovascular repair; aorto‐bifemoral prosthesis
+                        tr
+                            th(scope='row') 9
+                            td 35081
+                            td Direct repair of aneurysm, pseudoaneurysm, or excision (partial or total) and graft insertion, with or without patch graft; for aneurysm, pseudoaneurysm, and associated occlusive disease, abdominal aorta
+                        tr
+                            th(scope='row') 10
+                            td 35082
+                            td Direct repair of aneurysm, pseudoaneurysm, or excision (partial or total) and graft insertion, with or without patch graft; for ruptured aneurysm, abdominal aorta
+                        tr
+                            th(scope='row') 11
+                            td 35091
+                            td Direct repair of aneurysm, pseudoaneurysm, or excision (partial or total) and graft insertion, with or without patch graft; for aneurysm, pseudoaneurysm, and associated occlusive disease, abdominal aorta involving visceral vessels (mesenteric, celiac, renal)
+                        tr
+                            th(scope='row') 12
+                            td 35092
+                            td Direct repair of aneurysm, pseudoaneurysm, or excision (partial or total) and graft insertion, with or without patch graft; for ruptured aneurysm, abdominal aorta involving visceral vessels (mesenteric, celiac, renal)
+                        tr
+                            th(scope='row') 13
+                            td 35102
+                            td Direct repair of aneurysm, pseudoaneurysm, or excision (partial or total) and graft insertion, with or without patch graft; for aneurysm, pseudoaneurysm, and associated occlusive disease, abdominal aorta involving iliac vessels (common, hypogastric, external)
+                        tr
+                            th(scope='row') 14
+                            td 35103
+                            td Direct repair of aneurysm, pseudoaneurysm, or excision (partial or total) and graft insertion, with or without patch graft; for ruptured aneurysm, abdominal aorta involving iliac vessels (common, hypogastric, external)
+                        tr
+                            th(scope='row') 15
+                            td 35131
+                            td Direct repair of aneurysm, pseudoaneurysm, or excision (partial or total) and graft insertion, with or without patch graft; for aneurysm, pseudoaneurysm, and associated occlusive disease, iliac artery (common, hypogastric, external)
+                        tr
+                            th(scope='row') 16
+                            td 35132
+                            td Direct repair of aneurysm, pseudoaneurysm, or excision (partial or total) and graft insertion, with or without patch graft; for ruptured aneurysm, iliac artery (common, hypogastric, external)
+                        tr
+                            th(scope='row') 17
+                            td 441.3
+                            td Abdominal aortic aneurysm, ruptured
+                        tr
+                            th(scope='row') 18
+                            td 441.4
+                            td Abdominal aortic aneurysm, without mention of rupture
+
+
+            script(type='text/javascript', src='/phenoflow/javascripts/RosaceaPrototype.js')
+
+            script(type='text/javascript', src='/phenoflow/javascripts/AAAPrototype.js')
+            
+            script(type='text/javascript', src='/phenoflow/javascripts/formValidation.js')
