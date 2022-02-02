@@ -186,3 +186,34 @@ input[type=radio]:checked + label>div {
   align-items: center;
   align-content: center;
 }
+
+.pContactUsLink{
+  display: inline-block;
+}
+
+.pSetUpP{
+  display: inline-block;
+}
+
+.contactUsLink{
+  color: rgb(52, 190, 130);
+}
+
+.contactUsLink:hover{
+  color: rgb(46, 167, 96);
+}
+
+.contactUsConfirmationMsg{
+  color : #34BE82
+}
+
+.navICON{
+  position: absolute;
+  padding-right: 6.5px;
+
+}
+
+.nav-link{
+  margin-top: 10px
+}
+
