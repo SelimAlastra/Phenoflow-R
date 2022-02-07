@@ -24,6 +24,12 @@ a:hover {
   border-radius: 5%;
 }
 
+.defineLabel {
+  margin: 10px;
+  cursor: pointer;
+  width: 60px;
+}
+
 input[type=radio]:checked + label>svg {
   color: #34BE82!important;
 }
@@ -234,4 +240,8 @@ input[type=radio]:checked + label>div {
   color: red;
   align-items: center;
   text-align: center;
+}
+
+.warningP{
+  color: red;
 }

@@ -35,7 +35,7 @@ mixin createStep(position, name, doc, type, inputDoc, outputDoc, outputExtension
               input(type="radio" value=concept id="step" + position + concept name="step" + position + "type" class="type input-hidden" checked)
             else
               input(type="radio" value=concept id="step" + position + concept name="step" + position + "type" class="type input-hidden")
-            label(for="step" + position + concept, class=concept)
+            label.defineLabel(for="step" + position + concept, class=concept)
               +conceptIcon(concept)
         div
           +input("step" + position, "name", "Name", name)

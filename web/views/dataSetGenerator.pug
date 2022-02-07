@@ -1,0 +1,74 @@
+extends layout 
+
+block content
+    .container 
+        h2.pageTitle Data Set Generator 
+        .container
+            br
+            p Welcome to the data set generator, on this page you will have the ability to generate easily a data set by
+            p only inserting the codes required for a specific phenotype workflow.
+            hr
+            br
+            form.needs-validation#frm(novalidate='' onsubmit="return false")
+                .form-group
+                    p.warningP Please separate each code with a comma "," !! (white spaces are ignored)
+                    p Example : 2FG5.00 , M260000 , M261000 , M261100 , M261200
+                    br
+                    label(for='dataCodes') Codes related to the specific phenotype workflow
+                    input#dataCodes.form-control(type='text' name='dataCodes' required ="") 
+                    .invalid-feedback
+                        | Please insert the codes. 
+                br
+                .form-group
+                    label(for='numberOfPatients') Number of patients
+                    select#numberOfPatients.form-control
+                        script.
+                            //Inspired from 
+                            //https://stackoverflow.com/questions/50497960/fill-a-dropdown-menu-from-1-to-100-using-javascript/50497973
+                            var numberOfPatients = document.getElementById("numberOfPatients");
+                            var contents;
+                            //contents += "<option disabled selected value> -- Please select an option -- </option>";
+                            for (let i = 1; i <= 50; i++) {
+                            contents += "<option>" + i + "</option>";
+                            }
+                            numberOfPatients.innerHTML = contents;
+                    .invalid-feedback
+                        | Please insert the patient codes. 
+                br
+                .container.formContainer
+                    button.btn.btn-outline-success.formBtn(onclick='fillTable()', type='submit') Try it !
+            br
+
+            table#dataTable.table
+
+
+        .container.formContainer
+            br
+            button#btnExportToCsv.btn.btn-outline-success(type='button') Export to CSV
+            br
+            br
+            //This code was taken from Dcode
+            //Links: https://www.youtube.com/watch?v=cpHCv3gbPuk&list=WL&index=1&t=1407s
+            //https://codepen.io/dcode-software/pen/WBGOyd
+            script.
+                const dataTable = document.getElementById("dataTable");
+                const btnExportToCsv = document.getElementById("btnExportToCsv");
+                btnExportToCsv.addEventListener("click", () => {
+                const exporter = new TableCSVExporter(dataTable);
+                const csvOutput = exporter.convertToCSV();
+                const csvBlob = new Blob([csvOutput], { type: "text/csv" });
+                const blobUrl = URL.createObjectURL(csvBlob);
+                const anchorElement = document.createElement("a");
+                anchorElement.href = blobUrl;
+                anchorElement.download = "replaceMe.csv";
+                anchorElement.click();
+                setTimeout(() => {
+                URL.revokeObjectURL(blobUrl);
+                }, 500);
+                });
+
+
+        script(type='text/javascript', src='/phenoflow/javascripts/TableCSVExporter.js')
+        script(type='text/javascript', src='/phenoflow/javascripts/formValidation.js')
+        script(type='text/javascript', src='/phenoflow/javascripts/fillTable.js')
+
