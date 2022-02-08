@@ -5,14 +5,13 @@ block content
         h2.pageTitle Data Set Generator 
         .container
             br
-            p Welcome to the data set generator, on this page you will have the ability to generate easily a data set by
-            p only inserting the codes required for a specific phenotype workflow.
+            p Welcome to the data set generator, on this page you will have the ability to generate easily a data set by only inserting the codes required for a specific phenotype workflow.
             hr
             br
             form.needs-validation#frm(novalidate='' onsubmit="return false")
                 .form-group
-                    p.warningP Please separate each code with a comma "," !! (white spaces are ignored)
-                    p Example : 2FG5.00 , M260000 , M261000 , M261100 , M261200
+                    p.warningP Please separate each code with a white space !! 
+                    p Example : 2FG5.00 M260000 M261000 M261100 M261200
                     br
                     label(for='dataCodes') Codes related to the specific phenotype workflow
                     input#dataCodes.form-control(type='text' name='dataCodes' required ="") 
@@ -36,7 +35,7 @@ block content
                         | Please insert the patient codes. 
                 br
                 .container.formContainer
-                    button.btn.btn-outline-success.formBtn(onclick='fillTable()', type='submit') Try it !
+                    button(onclick='fillTable()').btn.btn-outline-success.formBtn(type='submit') Try it !
             br
 
             table#dataTable.table
