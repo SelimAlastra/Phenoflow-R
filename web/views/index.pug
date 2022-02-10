@@ -9,7 +9,7 @@ block preheader
 block content
 
   hr
-  h5 How do we achieve phenotype portability?
+  h2 How do we achieve phenotype portability?
   hr
   br
 
@@ -17,7 +17,7 @@ block content
     div(class="row align-items-center")
       div(class="col")
         a(href="/phenoflow/phenotype/all/")
-          img(src="/phenoflow/images/run.png" class="box" style="width: 500px;")
+          img(src="/phenoflow/images/run.png" class="box").indexImg
       div(class="col index-box")
         | Download and immediately execute a phenotype against a local dataset.
     div(class="row")
@@ -26,7 +26,7 @@ block content
     div(class="row align-items-center")
       div(class="col")
         a(href="/phenoflow/phenotype/all/")
-          img(src="/phenoflow/images/view.png" class="box" style="width: 500px;")
+          img(src="/phenoflow/images/view.png" class="box").indexImg
       div(class="col index-box")
           | Browse phenotypes represented in a standard format. <a href="/phenoflow/phenotype/all/">#{count}</a> phenotypes are currently available.
     div(class="row")
@@ -35,7 +35,7 @@ block content
     div(class="row align-items-center")
       div(class="col")
         a(href="/phenoflow/phenotype/all/")
-          img(src="/phenoflow/images/custom.png" class="box" style="width: 500px;")
+          img(src="/phenoflow/images/custom.png" class="box").indexImg
       div(class="col index-box")
         | Find and customise existing phenotypes, for local requirements.
     div(class="row")
@@ -44,7 +44,7 @@ block content
     div(class="row align-items-center")
       div(class="col")
         a(href="/phenoflow/phenotype/define")
-          img(src="/phenoflow/images/define.png" class="box" style="width: 500px;")
+          img(src="/phenoflow/images/define.png" class="box").indexImg
       div(class="col index-box")
         | Graphically author new phenotypes.
     div(class="row d-flex align-items-center")
@@ -55,39 +55,22 @@ block content
           img(src="/phenoflow/images/run.gif").gif
   
   hr
-  h5 Why does phenotype portability matter?
+  h2 Why does phenotype portability matter?
   hr
   br
 
-  div(class="container" style="margin-top: 20px;")
-    div(class="row align-items-center")
-      div(class="col")
-        div(class="box d-flex justify-content-center  align-items-center" style="width:500px; height:300px")
-          a(href="/phenoflow/phenotype/all/")
-            | Re-use
-      div(class="col index-box")
-        | Re-defining phenotypes at new sites may lead to inconsistent definitions. Instead, we want to be able to port definitions between sites, as facilitated by Phenoflow. This is not to say a single gold standard algorithm is required for each disease, but instead different algorithms should be semantically interoperable. The level of abstraction provided by Phenoflow also ensures this.
-    div(class="row")
-      div()
-        | &nbsp;
-    div(class="row align-items-center")
-      div(class="col")
-        div(class="box d-flex justify-content-center  align-items-center" style="width:500px; height:300px")
-          a(href="/phenoflow/phenotype/all/")
-            | Reproducibility
-      div(class="col")
-          | With the extraction of phenotype cohorts now forming a key part of many research methodologies, the mechanism used to derive a cohort within a given study needs to be reusable in order to ensure reproducibility and thus incremental research. The reusable definitions hosted within Phenoflow enable this research.
-    div(class="row")
-      div()
-        | &nbsp;
-    div(class="row align-items-center")
-      div(class="col")
-        div(class="box d-flex justify-content-center  align-items-center" style="width:500px; height:300px")
-          a(href="/phenoflow/phenotype/all/")
-            | Validation
-      div(class="col index-box")
-        | Trust in a phenotype definition is increased by validating it against multiple data sources, such as EHR repositories. By integrating with multiple data source formats, such as i2b2 and OMOP, Phenoflow enables this validation to take place.
-  
+
+  h4 Re-use
+  hr
+  p Re-defining phenotypes at new sites may lead to inconsistent definitions. Instead, we want to be able to port definitions between sites, as facilitated by Phenoflow. This is not to say a single gold standard algorithm is required for each disease, but instead different algorithms should be semantically interoperable. The level of abstraction provided by Phenoflow also ensures this.
+  br
+  h4 Reproducibility
+  hr
+  p With the extraction of phenotype cohorts now forming a key part of many research methodologies, the mechanism used to derive a cohort within a given study needs to be reusable in order to ensure reproducibility and thus incremental research. The reusable definitions hosted within Phenoflow enable this research.
+  br
+  h4 Validation
+  hr
+  p Trust in a phenotype definition is increased by validating it against multiple data sources, such as EHR repositories. By integrating with multiple data source formats, such as i2b2 and OMOP, Phenoflow enables this validation to take place.
   br
   
   div(class="container" style="margin-top: 20px;")
