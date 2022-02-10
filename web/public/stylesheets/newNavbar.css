@@ -36,7 +36,7 @@
     background-color: #34BE82;
 }
 
-@media (min-width: 1300px){
+@media (min-width: 1150px){
     .navbar-expand-custom {
         flex-direction: row;
         flex-wrap: nowrap;
@@ -63,4 +63,3 @@
         display: none;
     }
 }
-
