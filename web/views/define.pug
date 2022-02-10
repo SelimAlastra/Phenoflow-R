@@ -19,14 +19,17 @@ mixin createStep(position, name, doc, type, inputDoc, outputDoc, outputExtension
   div(id="step" + position style="padding-top: 20px;")
     div(class="row description highlight")
       div(class="col highlight")
-        | Input
+        h3 Input
+        br
     div(class="row")
       div(class="col")
         +input("step" + position, "inputDoc", "Describe", inputDoc)
+        br
         div(class="highlight arrow") &#8675;
     div(class="row")
       div(class="col highlight")
-        | Step
+        h3 Step
+        br
     div(class="row step")
       div(class="box col")
         div(style="text-align: center;")
@@ -41,29 +44,28 @@ mixin createStep(position, name, doc, type, inputDoc, outputDoc, outputExtension
           +input("step" + position, "name", "Name", name)
         div
           +input("step" + position, "doc", "Describe", doc)
-      div(class="col-1")
-      div(class="box col")
         if implementations && implementations[0]
           each implementation in implementations
               +createImplementation(implementation.language, languages, implementation.fileName)
         else
-            +createImplementation("-", languages)
-        a(onclick="addImplementation('step" + position +"'); return false;" style="float: right;")
-          +plusButton()
+          a(onclick="addImplementation('step" + position +"'); return false;")
+            +plusButton()
+          +createImplementation("-", languages)
+        
     div(class="row")
       div(class="col")
         div(class="highlight arrow") &#8675;
     div(class="row")
       div(class="col highlight")
-        | Output
+        h3 Output
+        br
     div(class="row")
       div(class="col")
         +input("step" + position, "outputDoc", "Describe", outputDoc)
         +input("step" + position, "outputExtension", "Extension", outputExtension)
     div(class="row stepRemove" style=(position==1?"display: none;":""))
-      div(class="col")
-        a(onclick="logDeletedStep(this); return false;" style="margin: 10px;")
-          span(class="highlight") REMOVE
+      .container.formContainer
+        button.btn.btn-outline-success(onclick="logDeletedStep(this); return false;" style="margin: 0px;") Remove last step
 
 block pageJS
   script(src="/phenoflow/javascripts/define.js")
@@ -72,9 +74,9 @@ block header
   span(class="authentication")
     | Define a new phenotype
   form(class="form-inline restricted")
-    +input("", "workflowName", "name", workflow&&workflow.name?workflow.name:"")
-    +input("", "workflowAbout", "about", workflow&&workflow.about?workflow.about:"")
-    a(onclick="createOrUpdateWorkflow(); return false;" class="a-button" style="margin: 10px;")
+    +input("", "workflowName", "Name", workflow&&workflow.name?workflow.name:"").defineNavInput
+    +input("", "workflowAbout", "About", workflow&&workflow.about?workflow.about:"").defineNavInput
+    button.btn.btn-outline-success.defineNavBtn(onclick="createOrUpdateWorkflow(); return false;"  style="margin: 10px;")
       | SAVE
 
 block content
@@ -92,4 +94,4 @@ block content
 
     div(class="row justify-content-center")
       a(onclick="addStep(); return false;" style="margin: 10px;")
-        +plusButton()
+        button.btn.btn-outline-success Add new step
