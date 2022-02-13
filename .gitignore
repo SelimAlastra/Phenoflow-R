@@ -620,6 +620,8 @@ web/templates/read-potential-cases-gstt.py
 web/views/analytics.pug
 scripts/
 
+nenv/
+
 !requirements.txt
 !README.txt
 !logo.png

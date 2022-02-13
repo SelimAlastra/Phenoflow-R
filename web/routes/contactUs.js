@@ -7,7 +7,7 @@ require('dotenv').config();
 
 router.get("/", async function(req, res, next) {
 
-  res.render("contactUs", {title:"Contact Us ", count: await models.workflow.count({distinct:true, col:'name'})});
+  res.render("contactUs", {title:"Contact Us "});
 });
 
 router.post("/", async function(req, res, next) {   
