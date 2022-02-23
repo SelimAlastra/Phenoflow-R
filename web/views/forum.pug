@@ -1,0 +1,82 @@
+extends layout 
+
+block content
+    .container 
+        h2.pageTitle Forum
+        br
+        h3 Add a post
+        hr
+        br
+        .container.formContainer
+            h5 Add a new post by clicking on the button below
+            button.btn.btn-outline-success(type='button' data-toggle='modal' data-target='#exampleModalCenter').modalBtn
+                | NEW POST
+            // Modal
+            #exampleModalCenter.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true')
+                .modal-dialog.modal-dialog-centered(role='document')
+                    .modal-content
+                        .modal-header
+                            h5#exampleModalLongTitle.modal-title Add a post
+                            button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                span(aria-hidden='true') ×
+                        .modal-body
+                            form.needs-validation#frm(method = "POST" action = "forum" novalidate='')
+                                .form-group
+                                    label(for='formControlInput1') Post title
+                                    br
+                                    input#formControlInput1.form-control(type='text' placeholder='Title' name = "title" required ="")
+                                    .invalid-feedback
+                                        | Please insert a title.
+                                    br
+                                .form-group
+                                    label(for='formControlInput2') Your name
+                                    br
+                                    input#formControlInput2.form-control(type='text' placeholder='John Smith' name = "author" required ="")
+                                    .invalid-feedback
+                                        | Please insert your name.
+                                    br
+
+                                .form-group
+                                    label(for='formControlTextarea1') Post content
+                                    textarea#formControlTextarea1.form-control(type = 'text' rows='3' placeholder="Insert your post content here..." name = "question" required ="")
+                                    .invalid-feedback
+                                        | Please insert your post content.
+                                    br
+
+                                .container.formContainer
+                                    button.btn.btn-outline-success.formBtn(type='submit') Submit
+
+
+
+        br
+        br
+        h3 Existing posts
+        hr
+        br
+        br
+        label Search a specific post
+        .container.formContainer
+            form.needs-validation#frm(method = "" action = "" novalidate='')
+                .input-group
+                    input#formControlInput1.form-control(type='text' placeholder='Post title, description or author ...' name = "search" required ="").searchBarInput
+                    button.btn.btn-outline-success.searchBTN(type='submit').searchBarBtn Search
+                    .invalid-feedback
+                        | Please insert something.
+                    
+                    
+        br
+        .row.justify-content-center
+            each p in post 
+                .col-6
+                    .card.postCardStyle
+                        .card-body
+                            h5.card-title #{p.title}
+                            h6.card-subtitle.mb-2.text-muted by #{p.author}
+                            p.card-text.cut-text-question #{p.question}
+                            a.card-link(href='#') View post 
+
+        br
+
+        script(type='text/javascript', src='/phenoflow/javascripts/formValidation.js')
+
+    

@@ -16,7 +16,7 @@ const models = require("../models")
 router.get("/",(req, res) => 
     models.post.findAll()
     .then(post => {
-      res.render('post', {
+      res.render('forum', {
         post,
         title: "Phenoflow FORUM"
       });
@@ -28,21 +28,17 @@ router.get("/",(req, res) =>
 
 //add a post 
 
-router.get("/add",(req, res) => {
-  const data = {
-    name : "Phenoflow OS",
-    description : "Phenoflow for Linux",
-    author: "Ahmed"
-  }
-  let {name,description,author} = data
+router.post("/",(req, res) => {
+
+  let {title,question,author} = req.body
 
   //Insert into table
   models.post.create({
-    name,
-    description,
+    title,
+    question,
     author
   })
-    .then(post => res.redirect("/phenoflow/post"))
+    .then(post => res.redirect("/phenoflow/forum"))
     .catch(err => console.log(err))
 });
 
