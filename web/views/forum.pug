@@ -18,7 +18,7 @@ block content
                         .modal-header
                             h5#exampleModalLongTitle.modal-title Add a post
                             button.close(type='button' data-dismiss='modal' aria-label='Close')
-                                span(aria-hidden='true') ×
+                                span(aria-hidden='true') x
                         .modal-body
                             form.needs-validation#frm(method = "POST" action = "forum" novalidate='')
                                 .form-group
@@ -65,8 +65,16 @@ block content
                     .invalid-feedback
                         | Please insert something.
         br
-        .container.formContainer
-            button.btn.btn-outline-success(hidden) Show ALL
+        if(typeof searchInput != "undefined")
+            .container.formContainer
+                a.btn.btn-outline-success.searchBTN(href= "/phenoflow/forum") Cancel Search
+
+        br
+        br
+        #post
+            if(post.length == 0)
+                container.formContainer
+                    h4 No post matching your search description ! 
         br
         .row.justify-content-center
             each p in post 

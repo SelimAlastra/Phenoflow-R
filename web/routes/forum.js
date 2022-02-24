@@ -30,9 +30,9 @@ router.get("/",(req, res) => {
     })
       .then(post => {
         res.render ('forum', {
+          searchInput,
           post,
-          title: "Phenoflow FORUM"
-
+          title: "Phenoflow FORUM",
         })
       })
       .catch(err => console.log(err))
