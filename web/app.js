@@ -44,8 +44,10 @@ const swaggerSpec = swaggerJSDoc(options);
 const swaggerUi = require('swagger-ui-express');
 require('dotenv').config()
 
+
 const models = require("./models");
 const index = require("./routes");
+const help = require("./routes/help")
 const forum = require("./routes/forum");
 const prototype = require("./routes/prototype");
 const dataSetGenerator = require("./routes/dataSetGenerator");
@@ -76,6 +78,7 @@ app.use("/phenoflow", express.static(path.join(__dirname, "public")));
 const router = express.Router();
 router.use("/", index);
 router.use("/forum", forum);
+router.use("/help", help)
 router.use("/prototype", prototype);
 router.use("/dataSetGenerator", dataSetGenerator);
 router.use("/setUp", setUp)
