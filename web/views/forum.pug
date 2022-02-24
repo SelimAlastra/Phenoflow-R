@@ -55,15 +55,18 @@ block content
         br
         br
         label Search a specific post
+        br
+        br
         .container.formContainer
-            form.needs-validation#frm(method = "" action = "" novalidate='')
+            form.needs-validation#frm(action = "/phenoflow/forum" novalidate='')
                 .input-group
-                    input#formControlInput1.form-control(type='text' placeholder='Post title, description or author ...' name = "search" required ="").searchBarInput
+                    input#formControlInput1.form-control(type='text' placeholder='Post title, description or author ...' name = "searchInput" required ="").searchBarInput
                     button.btn.btn-outline-success.searchBTN(type='submit').searchBarBtn Search
                     .invalid-feedback
                         | Please insert something.
-                    
-                    
+        br
+        .container.formContainer
+            button.btn.btn-outline-success(hidden) Show ALL
         br
         .row.justify-content-center
             each p in post 
@@ -78,5 +81,7 @@ block content
         br
 
         script(type='text/javascript', src='/phenoflow/javascripts/formValidation.js')
+
+        
 
     
