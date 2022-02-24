@@ -53,6 +53,11 @@ block content
     h4 Answers 
     hr
     br
+    #answers
+        if(answers.length == 0)
+            container.formContainer
+                h6 There are no answers to this post, be the first one !
+
     each answer in answers
         .card
             .card-body
