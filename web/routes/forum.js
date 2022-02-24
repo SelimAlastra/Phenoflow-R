@@ -15,7 +15,9 @@ const Op = Sequelize.Op;
 //     .catch(err => console.log(err))
 // );
 
+
 router.get("/",(req, res) => {
+
 
   if(Object.keys(req.query).length != 0){
     let {searchInput} = req.query;
@@ -49,6 +51,43 @@ router.get("/",(req, res) => {
   }
   }
 );
+
+
+// router.get("/:id",  (req, res) => {
+  
+
+
+//   res.render('post', {
+//     post : models.post.findOne({where:{id: req.params.id}}),
+//     title: "Post number : " + req.params.id
+//   })
+    
+// })
+
+router.get("/:id", async function(req, res) {
+
+  try {
+    let post = await models.post.findOne({where:{id: req.params.id}});
+    let answers = await models.answer.findAll({where:{postId : req.params.id}})
+    res.render("post", {title:"Post number " + req.params.id , post : post , answers : answers});
+  } catch(error) {
+    logger.error(error);
+    res.sendStatus(500);
+  }
+
+});
+
+router.post("/:id",(req, res) => {
+
+  let {content,author} = req.body
+
+  models.answer.create({
+    content,
+    author,
+    postId : req.params.id
+  }).then(answer => res.redirect("/phenoflow/forum/" + req.params.id ))
+  .catch(err => console.log(err))
+})
 
 //add a post 
 
