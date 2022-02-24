@@ -84,8 +84,7 @@ block content
                             h5.card-title.cut-text #{p.title}
                             h6.card-subtitle.mb-2.text-muted.cut-text by #{p.author}
                             p.card-text.cut-text #{p.question}
-                            a.card-link(href='#').cut-text View post 
-
+                            a.card-link(href= '/phenoflow/forum/' + p.id ).cut-text View post 
         br
 
         script(type='text/javascript', src='/phenoflow/javascripts/formValidation.js')

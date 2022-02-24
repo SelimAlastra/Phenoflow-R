@@ -1,0 +1,79 @@
+extends layout 
+
+block content  
+    
+    script(type='text/javascript', src='/phenoflow/javascripts/timeSince.js')
+
+    .container.formContainer
+        a(href= "/phenoflow/forum").modalBtn &larr;  Go back to FORUM
+    br
+    .card
+        .card-header
+            | #{post.title}
+        .card-body
+            blockquote.blockquote.mb-0
+            p
+            | #{post.question}
+            p
+            footer.blockquote-footer
+                | by #{post.author}
+                p
+                p#timeAgo
+    br
+    .container.formContainer
+            button.btn.btn-outline-success(type='button' data-toggle='modal' data-target='#exampleModalCenter').modalBtn
+                | ANSWER
+            // Modal
+            #exampleModalCenter.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true')
+                .modal-dialog.modal-dialog-centered(role='document')
+                    .modal-content
+                        .modal-header
+                            h5#exampleModalLongTitle.modal-title Post an answer
+                            button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                span(aria-hidden='true') x
+                        .modal-body
+                            form.needs-validation#frm(method = "POST" novalidate='')
+                                .form-group
+                                    label(for='formControlInput1') Answer
+                                    br
+                                    textarea#formControlInput1.form-control(type='text' placeholder='Content...' name = "content" required ="")
+                                    .invalid-feedback
+                                        | Please insert an answer.
+                                    br
+                                .form-group
+                                    label(for='formControlInput2') Your name
+                                    br
+                                    input#formControlInput2.form-control(type='text' placeholder='John Smith' name = "author" required ="")
+                                    .invalid-feedback
+                                        | Please insert your name.
+                                    br
+                                .container.formContainer
+                                    button.btn.btn-outline-success.formBtn(type='submit') Submit
+    hr
+    h4 Answers 
+    hr
+    br
+    each answer in answers
+        .card
+            .card-body
+                blockquote.blockquote.mb-0
+                p
+                    | #{answer.content}
+                footer.blockquote-footer
+                    | by #{answer.author}
+                    p
+                    p(id = answer.id)
+            
+        script.
+            document.getElementById("#{answer.id}").innerHTML = timeSince(new Date("#{answer.createdAt}" )) + " ago"
+
+        br
+
+    
+    script.
+        document.getElementById("timeAgo").innerHTML = timeSince(new Date("#{post.createdAt}" )) + " ago"
+
+        
+
+    
+        
