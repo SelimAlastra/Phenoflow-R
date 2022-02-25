@@ -329,7 +329,9 @@ input[type=radio]:checked + label>div {
   font-size: 22px;
 }
 
-
+.workflowSearchbar{
+  padding-right: 1.5vw;
+}
 
 
 

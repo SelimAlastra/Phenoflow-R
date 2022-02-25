@@ -1,4 +1,22 @@
 div(class="container" style="padding-top: 20px;")
+  .container.formContainer
+    form.needs-validation#frm(novalidate='' onsubmit="return false")
+        .input-group.workflowSearchbar
+            input#searchInput.form-control(type='text' placeholder='Worfklow name, description, code, author...' name = "searchInput" required ="").searchBarInput
+            button.btn.btn-outline-success.searchBTN(type='submit' onclick='searchWorkflow()').searchBarBtn Search
+            .invalid-feedback
+                | Please insert something.
+  br
+  .container.formContainer
+      a.btn.btn-outline-success.searchBTN(href= "/phenoflow/phenotype/all")#cancelSearchBtn Cancel Search
+
+  script.
+    url_string = window.location.href;
+    var url = new URL(url_string);
+    var arg = url.searchParams.get("arg");
+    if(!arg){document.getElementById("cancelSearchBtn").style.visibility = "hidden";}
+
+  br
   each workflow in workflows
     span(class="workflow " + workflow.userName)
       div(class="row")
@@ -13,3 +31,15 @@ div(class="container" style="padding-top: 20px; text-align: center;")
   if next && workflows.length == limit
     | &nbsp;
     a(href=next) NEXT
+
+script.
+  function searchWorkflow(){
+    const searchInput = document.getElementById("searchInput").value;
+    if(searchInput) {
+      window.location = "/phenoflow/phenotype/all/" + searchInput + "?arg=" + searchInput;
+    }
+  }
+
+script(type='text/javascript', src='/phenoflow/javascripts/formValidation.js')
+
+  
