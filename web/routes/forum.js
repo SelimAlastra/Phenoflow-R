@@ -53,44 +53,6 @@ router.get("/",(req, res) => {
 );
 
 
-// router.get("/:id",  (req, res) => {
-  
-
-
-//   res.render('post', {
-//     post : models.post.findOne({where:{id: req.params.id}}),
-//     title: "Post number : " + req.params.id
-//   })
-    
-// })
-
-router.get("/:id", async function(req, res) {
-
-  try {
-    let post = await models.post.findOne({where:{id: req.params.id}});
-    let answers = await models.answer.findAll({where:{postId : req.params.id}})
-    res.render("post", {title:"Post number " + req.params.id , post : post , answers : answers});
-  } catch(error) {
-    logger.error(error);
-    res.sendStatus(500);
-  }
-
-});
-
-router.post("/:id",(req, res) => {
-
-  let {content,author} = req.body
-
-  models.answer.create({
-    content,
-    author,
-    postId : req.params.id
-  }).then(answer => res.redirect("/phenoflow/forum/" + req.params.id ))
-  .catch(err => console.log(err))
-})
-
-//add a post 
-
 router.post("/",(req, res) => {
 
   let {title,question,author} = req.body
@@ -104,6 +66,72 @@ router.post("/",(req, res) => {
     .then(post => res.redirect("/phenoflow/forum"))
     .catch(err => console.log(err))
 });
+
+
+router.get("/remove/:id", async function(req, res) {
+  
+  try {
+    let post = await models.post.findOne({where:{id: req.params.id}});
+    await post.destroy()
+    res.redirect("/phenoflow/forum");
+  } catch(error) {
+    logger.error(error);
+    res.sendStatus(500);
+  }
+});
+
+
+
+// router.get("/remove/:id", async function(req, res) {
+
+//   try {
+//     let post = await models.post.findOne({where:{id: req.params.id}});
+//     let answers = await models.answer.findAll({where:{postId : req.params.id}})
+//     res.render("post", {title:"Post number " + req.params.id , post : post , answers : answers});
+//   } catch(error) {
+//     logger.error(error);
+//     res.sendStatus(500);
+//   }
+// });
+
+router.get("/post/:id", async function(req, res) {
+
+  try {
+    let post = await models.post.findOne({where:{id: req.params.id}});
+    let answers = await models.answer.findAll({where:{postId : req.params.id}})
+    res.render("post", {title:"Post number " + req.params.id , post : post , answers : answers});
+  } catch(error) {
+    logger.error(error);
+    res.sendStatus(500);
+  }
+});
+
+router.post("/post/:id",(req, res) => {
+
+  let {content,author} = req.body
+
+  models.answer.create({
+    content,
+    author,
+    postId : req.params.id
+  }).then(answer => res.redirect("/phenoflow/forum/post/" + req.params.id ))
+  .catch(err => console.log(err))
+})
+
+router.get("/post/removeAnswer/:id/:postId", async function(req, res) {
+  
+  try {
+    let answer = await models.answer.findOne({where:{id: req.params.id}});
+    await answer.destroy()
+    res.redirect("/phenoflow/forum/post/" + req.params.postId);
+  } catch(error) {
+    logger.error(error);
+    res.sendStatus(500);
+  }
+});
+
+
+
 
 
 module.exports = router;
