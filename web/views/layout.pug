@@ -52,13 +52,13 @@ html(lang="en" class="notranslate" translate="no")
                     path(d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z')
                   | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BROWSE
               li.nav-item
-                a(class="nav-link" href="/phenoflow/phenotype/define")
+                a(class="nav-link restricted" href="/phenoflow/phenotype/define")
                   svg.bi.bi-plus-square(xmlns='http://www.w3.org/2000/svg' width="1.6em" height="1.5em" fill='currentColor' viewBox='0 0 16 16' class='navICON')
                       path(d='M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z')
                       path(d='M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z')
                   | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DEFINE
               li.nav-item
-                a(class="nav-link" href="/phenoflow/phenotype/mine/")
+                a(class="nav-link restricted" href="/phenoflow/phenotype/mine/")
                   svg(class="bi bi-pencil" width="1.7em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class='navICON')
                     path(fill-rule="evenodd" d="M11.293 1.293a1 1 0 011.414 0l2 2a1 1 0 010 1.414l-9 9a1 1 0 01-.39.242l-3 1a1 1 0 01-1.266-1.265l1-3a1 1 0 01.242-.391l9-9zM12 2l2 2-9 9-3 1 1-3 9-9z" clip-rule="evenodd")
                     path(fill-rule="evenodd" d="M12.146 6.354l-2.5-2.5.708-.708 2.5 2.5-.707.708zM3 10v.5a.5.5 0 00.5.5H4v.5a.5.5 0 00.5.5H5v.5a.5.5 0 00.5.5H6v-1.5a.5.5 0 00-.5-.5H5v-.5a.5.5 0 00-.5-.5H3z" clip-rule="evenodd")
@@ -92,13 +92,19 @@ html(lang="en" class="notranslate" translate="no")
                     path(d='M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z')
                   | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Help
 
+              li(class="nav-item authentication")
+                a(class="nav-link" data-toggle="modal" data-target="#loginModal")
+                  svg.bi.bi-box-arrow-in-right(xmlns='http://www.w3.org/2000/svg' width="1.6em" height="1.5em" fill='currentColor' viewBox='0 0 16 16'  class='navICON')
+                    path(fill-rule='evenodd' d='M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z')
+                    path(fill-rule='evenodd' d='M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z')
+                  | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Login
+
               li(class="nav-item restricted")
                 a(class="nav-link" onClick="logout()")
-                  svg(class="bi bi-box-arrow-in-right" width="1.6em" height="1.6em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class='navICON')
-                    path(fill-rule="evenodd" d="M8.146 11.354a.5.5 0 010-.708L10.793 8 8.146 5.354a.5.5 0 11.708-.708l3 3a.5.5 0 010 .708l-3 3a.5.5 0 01-.708 0z" clip-rule="evenodd")
-                    path(fill-rule="evenodd" d="M1 8a.5.5 0 01.5-.5h9a.5.5 0 010 1h-9A.5.5 0 011 8z" clip-rule="evenodd")
-                    path(fill-rule="evenodd" d="M13.5 14.5A1.5 1.5 0 0015 13V3a1.5 1.5 0 00-1.5-1.5h-8A1.5 1.5 0 004 3v1.5a.5.5 0 001 0V3a.5.5 0 01.5-.5h8a.5.5 0 01.5.5v10a.5.5 0 01-.5.5h-8A.5.5 0 015 13v-1.5a.5.5 0 00-1 0V13a1.5 1.5 0 001.5 1.5h8z" clip-rule="evenodd")
-                  | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LOGOUT
+                  svg.bi.bi-box-arrow-left(xmlns='http://www.w3.org/2000/svg' width="1.6em" height="1.5em" fill='currentColor' viewBox='0 0 16 16' class='navICON')
+                    path(fill-rule='evenodd' d='M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z')
+                    path(fill-rule='evenodd' d='M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z')
+                  | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Logout
                   
               li(class="" style="width: 200px;").hdrUK
                 a(href="https://www.hdruk.ac.uk/projects/national-phenomics-resource")
@@ -144,7 +150,16 @@ html(lang="en" class="notranslate" translate="no")
           button.btn.btn-outline-success Add
 
         .container 
-          div(style="margin-top: 50px;")
+          div(style="margin-top: 50px;" class = "authentication") 
+          #loginModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='loginModalTitle' aria-hidden='true')
+                  .modal-dialog.modal-dialog-centered(role='document')
+                      .modal-content
+                          .modal-header
+                              h5#exampleModalLongTitle.modal-title Login
+                              button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                  span(aria-hidden='true') x
+                          .modal-body
+                            include authentication.pug
           block content
           br
 

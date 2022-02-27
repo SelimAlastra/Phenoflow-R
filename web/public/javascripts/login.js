@@ -59,5 +59,6 @@ function login() {
       return false;
     }
 
+    $('#loginModal').modal('hide');
   });
 }
