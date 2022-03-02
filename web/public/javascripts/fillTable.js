@@ -4,18 +4,44 @@ function fillTable() {
     // dataCodes = dataCodes.replace(/\s/g, '');
     let codesArray = dataCodes.split(' ');
 
+    for(let exporterButton of document.getElementsByClassName("exporterButton")) exporterButton.style.display = "none";
+
+    let contents;
+    dataTable.innerHTML = contents;
+
+    errorMessage.innerHTML =  ""
+
     if (dataCodes.length == 0){
+        dataTable.innerHTML = "";
         return
     }
 
+    const maxNumberOfCodes = document.getElementById("maxNumberOfCodes").value;
+    const minNumberOfCodes = document.getElementById("minNumberOfCodes").value;
     const numberOfPatients = document.getElementById("numberOfPatients").value;
     const minimumDate = new Date(1920, 0, 1);
+    
+    if(maxNumberOfCodes > codesArray.length){
+        errorMessage.innerHTML = "The maximum number of codes is greater than the number of codes provided !"
+        dataTable.innerHTML = "";
+        return
+    }
+
+    if(minNumberOfCodes > maxNumberOfCodes){
+        errorMessage.innerHTML = "The minimum number of codes is greater than the maximum number of codes provided !"
+        dataTable.innerHTML = "";
+        return
+    }
+
+    for(let exporterButton of document.getElementsByClassName("exporterButton")) exporterButton.style.display = "inline-block";
     
     //Taken from
     //https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
     function randomIntFromInterval(min, max) { // min and max included 
-        return Math.floor(Math.random() * (max - min + 1) + min)
-      }
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
 
     //Taken from
     //https://stackoverflow.com/questions/9035627/elegant-method-to-generate-array-of-random-dates-within-two-dates
@@ -44,7 +70,7 @@ function fillTable() {
         return formatDate(d)
     }
 
-    let contents = `
+    contents = `
         <thead>
             <tr>
                 <th>patient-id</th>
@@ -62,11 +88,11 @@ function fillTable() {
         codeDates = []
         birthDate = randomDate(minimumDate, new Date());
         birthDateFormated = (formatDate(birthDate));
-        numberOfCodes = randomIntFromInterval(1, codesArray.length)
+        numberOfCodes = randomIntFromInterval(minNumberOfCodes, maxNumberOfCodes)
+        console.log(numberOfCodes)
         //random but must be 1 or less that the number of codes in the array
         for (let i = 1; i <= numberOfCodes; i++){
             let codeDate;
-            console.log(birthDate)
             codeDate = randomDate(birthDate, new Date());
             codeDates.push(codeDate);
             //must be before the birthdate

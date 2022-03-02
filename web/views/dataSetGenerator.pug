@@ -25,27 +25,61 @@ block content
                             //Inspired from 
                             //https://stackoverflow.com/questions/50497960/fill-a-dropdown-menu-from-1-to-100-using-javascript/50497973
                             var numberOfPatients = document.getElementById("numberOfPatients");
-                            var contents;
+                            var numberOptions;
                             //contents += "<option disabled selected value> -- Please select an option -- </option>";
                             for (let i = 1; i <= 50; i++) {
-                            contents += "<option>" + i + "</option>";
+                            numberOptions += "<option>" + i + "</option>";
                             }
-                            numberOfPatients.innerHTML = contents;
+                            numberOfPatients.innerHTML = numberOptions;
                     .invalid-feedback
-                        | Please insert the patient codes. 
+                        | Please insert the patient codes.
                 br
-                .container.formContainer
+                .form-group
+                    label(for='maxNumberOfCodes') Select a maximum number of codes
+                    select#maxNumberOfCodes.form-control
+                        script.
+                            //Inspired from 
+                            //https://stackoverflow.com/questions/50497960/fill-a-dropdown-menu-from-1-to-100-using-javascript/50497973
+                            var maxNumberOfCodes = document.getElementById("maxNumberOfCodes");
+                            var numberOptions2;
+                            //contents += "<option disabled selected value> -- Please select an option -- </option>";
+                            for (let i = 1; i <= 5; i++) {
+                            numberOptions2 += "<option>" + i + "</option>";
+                            }
+                            maxNumberOfCodes.innerHTML = numberOptions2;
+                    .invalid-feedback
+                        | Please choose a maximum number of codes.  
+                br
+                .form-group
+                    label(for='minNumberOfCodes') Select a minimum number of codes
+                    select#minNumberOfCodes.form-control
+                        script.
+                            //Inspired from 
+                            //https://stackoverflow.com/questions/50497960/fill-a-dropdown-menu-from-1-to-100-using-javascript/50497973
+                            var minNumberOfCodes = document.getElementById("minNumberOfCodes");
+                            var numberOptions3;
+                            //contents += "<option disabled selected value> -- Please select an option -- </option>";
+                            for (let i = 1; i <= 5; i++) {
+                            numberOptions3 += "<option>" + i + "</option>";
+                            }
+                            minNumberOfCodes.innerHTML = numberOptions3;
+                    .invalid-feedback
+                        | Please choose a minimum number of codes.  
+                br
+                .container.centerContainer
                     button(onclick='fillTable()').btn.btn-outline-success.formBtn(type='submit') Try it !
-            br
+        
 
+            .container.centerContainer
+                br
+                h5#errorMessage.errorMessage
+                button.btn.btn-outline-success(type='button' class = "btnExportToCsv exporterButton") Export to CSV
+
+            br     
+            br  
             table#dataTable.table
 
 
-        .container.formContainer
-            br
-            button#btnExportToCsv.btn.btn-outline-success(type='button') Export to CSV
-            br
-            br
             //This code was taken from Dcode
             //Links: https://www.youtube.com/watch?v=cpHCv3gbPuk&list=WL&index=1&t=1407s
             //https://codepen.io/dcode-software/pen/WBGOyd
@@ -66,6 +100,9 @@ block content
                 }, 500);
                 });
 
+        br
+        br
+        br
 
         script(type='text/javascript', src='/phenoflow/javascripts/TableCSVExporter.js')
         script(type='text/javascript', src='/phenoflow/javascripts/formValidation.js')

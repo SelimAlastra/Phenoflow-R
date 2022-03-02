@@ -1,5 +1,5 @@
 div(class="container" style="padding-top: 20px;")
-  .container.formContainer
+  .container.centerContainer
     form.needs-validation#frm(novalidate='' onsubmit="return false")
         .input-group.workflowSearchbar
             input#searchInput.form-control(type='text' placeholder='Worfklow name, description, code, author...' name = "searchInput" required ="").searchBarInput
@@ -7,7 +7,7 @@ div(class="container" style="padding-top: 20px;")
             .invalid-feedback
                 | Please insert something.
   br
-  .container.formContainer
+  .container.centerContainer
       a.btn.btn-outline-success.searchBTN(href= "/phenoflow/phenotype/all")#cancelSearchBtn Cancel Search
 
   script.

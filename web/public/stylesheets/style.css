@@ -178,7 +178,7 @@ input[type=radio]:checked + label>div {
   padding-right: 0.75em;
 }
 
-.formContainer{
+.centerContainer{
   align-items: center;
   text-align: center;
 }
@@ -335,6 +335,16 @@ input[type=radio]:checked + label>div {
 
 .deletePostBtn{
   float: right;
+}
+
+.errorMessage{
+  color : red;
+}
+
+.exporterButton {
+  text-align: center;
+  align-self: center;
+  display: none;
 }
 
 
