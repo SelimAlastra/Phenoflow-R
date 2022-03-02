@@ -2,7 +2,7 @@ span(class="authentication")
   div(class="container" style="padding-top: 20px;")
 
     
-    form.needs-validation#frm(novalidate= '' onsubmit="return false")
+    form.needs-validation#loginForm(novalidate= '' onsubmit="return false")
       .form-group
           label(for='username') Username
           input#username.form-control(name='username' placeholder='John' type='text' required ="")
@@ -15,7 +15,7 @@ span(class="authentication")
           .invalid-feedback
               | Please insert a password.
           br
-      .container.formContainer
+      .container.centerContainer
           button.btn.btn-outline-success.formBtn(onclick="login()" type='submit') Login
           
     h6#authCheck.authCheck

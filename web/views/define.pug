@@ -64,7 +64,7 @@ mixin createStep(position, name, doc, type, inputDoc, outputDoc, outputExtension
         +input("step" + position, "outputDoc", "Describe", outputDoc)
         +input("step" + position, "outputExtension", "Extension", outputExtension)
     div(class="row stepRemove" style=(position==1?"display: none;":""))
-      .container.formContainer
+      .container.centerContainer
         button.btn.btn-outline-success(onclick="logDeletedStep(this); return false;" style="margin: 0px;") Remove last step
 
 block pageJS
