@@ -8,7 +8,7 @@ block content
         h3 Add a post
         hr
         br
-        .container.formContainer
+        .container.centerContainer
             h5 Add a new post by clicking on the button below
             button.btn.btn-outline-success(type='button' data-toggle='modal' data-target='#postModal').modalBtn
                 | NEW POST
@@ -44,7 +44,7 @@ block content
                                         | Please insert your post content.
                                     br
 
-                                .container.formContainer
+                                .container.centerContainer
                                     button.btn.btn-outline-success.formBtn(type='submit') Submit
 
 
@@ -58,7 +58,7 @@ block content
         label Search a specific post
         br
         br
-        .container.formContainer
+        .container.centerContainer
             form.needs-validation#frm(action = "/phenoflow/forum" novalidate='')
                 .input-group
                     input#formControlInput1.form-control(type='text' placeholder='Post title, description or author ...' name = "searchInput" required ="").searchBarInput
@@ -67,14 +67,14 @@ block content
                         | Please insert something.
         br
         if(typeof searchInput != "undefined")
-            .container.formContainer
+            .container.centerContainer
                 a.btn.btn-outline-success.searchBTN(href= "/phenoflow/forum") Cancel Search
 
         br
         br
         #post
             if(post.length == 0)
-                container.formContainer
+                container.centerContainer
                     h6 No post matching your search description ! 
         br
         .row.justify-content-center
