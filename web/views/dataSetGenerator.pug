@@ -20,7 +20,7 @@ block content
                 br
                 .form-group
                     label(for='numberOfPatients') Number of patients
-                    select#numberOfPatients.form-control
+                    select.custom-select#numberOfPatients.form-control
                         script.
                             //Inspired from 
                             //https://stackoverflow.com/questions/50497960/fill-a-dropdown-menu-from-1-to-100-using-javascript/50497973
@@ -34,37 +34,68 @@ block content
                     .invalid-feedback
                         | Please insert the patient codes.
                 br
-                .form-group
-                    label(for='maxNumberOfCodes') Select a maximum number of codes
-                    select#maxNumberOfCodes.form-control
-                        script.
-                            //Inspired from 
-                            //https://stackoverflow.com/questions/50497960/fill-a-dropdown-menu-from-1-to-100-using-javascript/50497973
-                            var maxNumberOfCodes = document.getElementById("maxNumberOfCodes");
-                            var numberOptions2;
-                            //contents += "<option disabled selected value> -- Please select an option -- </option>";
-                            for (let i = 1; i <= 5; i++) {
-                            numberOptions2 += "<option>" + i + "</option>";
-                            }
-                            maxNumberOfCodes.innerHTML = numberOptions2;
-                    .invalid-feedback
-                        | Please choose a maximum number of codes.  
+                .custom-control.custom-switch
+                    input#advancedParamsSwitch.custom-control-input(type='checkbox'  data-toggle='collapse' href='#collapseExample' role='button' aria-expanded='false' aria-controls='collapseExample')
+                    label.custom-control-label(for='advancedParamsSwitch') Advanced parameters
+
                 br
-                .form-group
-                    label(for='minNumberOfCodes') Select a minimum number of codes
-                    select#minNumberOfCodes.form-control
-                        script.
-                            //Inspired from 
-                            //https://stackoverflow.com/questions/50497960/fill-a-dropdown-menu-from-1-to-100-using-javascript/50497973
-                            var minNumberOfCodes = document.getElementById("minNumberOfCodes");
-                            var numberOptions3;
-                            //contents += "<option disabled selected value> -- Please select an option -- </option>";
-                            for (let i = 1; i <= 5; i++) {
-                            numberOptions3 += "<option>" + i + "</option>";
-                            }
-                            minNumberOfCodes.innerHTML = numberOptions3;
-                    .invalid-feedback
-                        | Please choose a minimum number of codes.  
+                #collapseExample.collapse
+                    .card.card-body
+                        | Please make sure to select the minimum and maximum ages and last encouter dates. The encouter dates must greater than the maximum age of the patients.
+                        br
+                        br
+                        .form-group
+                            label(for='maxNumberOfCodes') Select a maximum number of codes
+                            select.custom-select#maxNumberOfCodes.form-control
+                                script.
+                                    //Inspired from 
+                                    //https://stackoverflow.com/questions/50497960/fill-a-dropdown-menu-from-1-to-100-using-javascript/50497973
+                                    var maxNumberOfCodes = document.getElementById("maxNumberOfCodes");
+                                    var numberOptions2;
+                                    //contents += "<option disabled selected value> -- Please select an option -- </option>";
+                                    for (let i = 1; i <= 5; i++) {
+                                    numberOptions2 += "<option>" + i + "</option>";
+                                    }
+                                    maxNumberOfCodes.innerHTML = numberOptions2;
+                            .invalid-feedback
+                                | Please choose a maximum number of codes.  
+                        br
+                        .form-group
+                            label(for='minNumberOfCodes') Select a minimum number of codes
+                            select.custom-select#minNumberOfCodes.form-control
+                                script.
+                                    //Inspired from 
+                                    //https://stackoverflow.com/questions/50497960/fill-a-dropdown-menu-from-1-to-100-using-javascript/50497973
+                                    var minNumberOfCodes = document.getElementById("minNumberOfCodes");
+                                    var numberOptions3;
+                                    //contents += "<option disabled selected value> -- Please select an option -- </option>";
+                                    for (let i = 1; i <= 5; i++) {
+                                    numberOptions3 += "<option>" + i + "</option>";
+                                    }
+                                    minNumberOfCodes.innerHTML = numberOptions3;
+                            .invalid-feedback
+                                | Please choose a minimum number of codes. 
+                        br
+                        .form-group
+                            label(for='yBirthdate') Younget possible patient birthdate
+                            input#yBirthdate.form-control(type='date' name='yBirthdate' required ="" )
+                            .invalid-feedback
+                                | Please insert the youngest possible patient birthdate
+                        br
+                        .form-group
+                            label(for='oBirthDate') Oldest possible patient birthdate
+                            input#oBirthdate.form-control(type='date' name='oBirthDate' required ="" )
+                            .invalid-feedback
+                                | Please insert the oldest possible patient birthdate
+                        br
+                        .form-group
+                            label(for='latestEncDate') Latest encouter date
+                            input#latestEncDate.form-control(type='date' name='latestEncDate' required ="" )
+                            .invalid-feedback
+                                | Please insert the latest encouter date.
+                        br
+                        br
+
                 br
                 .container.centerContainer
                     button(onclick='fillTable()').btn.btn-outline-success.formBtn(type='submit') Try it !
@@ -73,7 +104,7 @@ block content
             .container.centerContainer
                 br
                 h5#errorMessage.errorMessage
-                button.btn.btn-outline-success(type='button' class = "btnExportToCsv exporterButton") Export to CSV
+                button#btnExportToCsv.btn.btn-outline-success(type='button' class = "exporterButton") Export to CSV
 
             br     
             br  
@@ -104,7 +135,7 @@ block content
         br
         br
 
-        script(type='text/javascript', src='/phenoflow/javascripts/TableCSVExporter.js')
-        script(type='text/javascript', src='/phenoflow/javascripts/formValidation.js')
-        script(type='text/javascript', src='/phenoflow/javascripts/fillTable.js')
+    script(type='text/javascript', src='/phenoflow/javascripts/TableCSVExporter.js')
+    script(type='text/javascript', src='/phenoflow/javascripts/formValidation.js')
+    script(type='text/javascript', src='/phenoflow/javascripts/fillTable.js')
 

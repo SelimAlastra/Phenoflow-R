@@ -348,5 +348,21 @@ input[type=radio]:checked + label>div {
 }
 
 
+.custom-control-input:checked~.custom-control-label::before {
+  color: #fff;
+  border-color: #fdfdfd;
+  background-color: #34BE82;
+}
 
+.custom-control-input:focus:not(:checked)~.custom-control-label::before {
+  border-color: #34BE82;
+}
+
+.custom-control-input:focus~.custom-control-label::before {
+  box-shadow: 0 0 0 0.2rem #34be8296;
+}
+
+.was-validated .custom-control-input:valid~.custom-control-label {
+  color: #000000d0;
+}
 

@@ -19,18 +19,57 @@ function fillTable() {
     const maxNumberOfCodes = document.getElementById("maxNumberOfCodes").value;
     const minNumberOfCodes = document.getElementById("minNumberOfCodes").value;
     const numberOfPatients = document.getElementById("numberOfPatients").value;
-    const minimumDate = new Date(1920, 0, 1);
-    
-    if(maxNumberOfCodes > codesArray.length){
-        errorMessage.innerHTML = "The maximum number of codes is greater than the number of codes provided !"
-        dataTable.innerHTML = "";
-        return
-    }
 
-    if(minNumberOfCodes > maxNumberOfCodes){
-        errorMessage.innerHTML = "The minimum number of codes is greater than the maximum number of codes provided !"
-        dataTable.innerHTML = "";
-        return
+    const oBirthdate =  new Date(document.getElementById("oBirthdate").value);
+    const yBirthdate = new Date(document.getElementById("yBirthdate").value);
+
+    const latestEncDate = new Date(document.getElementById("latestEncDate").value);
+
+
+    const advancedParams = document.getElementById("advancedParamsSwitch").checked;
+
+    
+    const minimumDate = new Date(1920, 0, 1);
+
+    if(advancedParams == true){
+        if (oBirthdate instanceof Date && isNaN(oBirthdate)){
+            dataTable.innerHTML = "";
+            return
+        }
+
+        if (yBirthdate instanceof Date && isNaN(yBirthdate)){
+            dataTable.innerHTML = "";
+            return
+        }
+
+        if (latestEncDate instanceof Date && isNaN(latestEncDate)){
+            dataTable.innerHTML = "";
+            return
+        }
+        
+        if(maxNumberOfCodes > codesArray.length){
+            errorMessage.innerHTML = "The maximum number of codes is greater than the number of codes provided !"
+            dataTable.innerHTML = "";
+            return
+        }
+
+        if(minNumberOfCodes > maxNumberOfCodes){
+            errorMessage.innerHTML = "The minimum number of codes is greater than the maximum number of codes provided !"
+            dataTable.innerHTML = "";
+            return
+        }
+
+        if(yBirthdate < oBirthdate){
+            errorMessage.innerHTML = "The younget possible patient is older than the oldest one !"
+            dataTable.innerHTML = "";
+            return
+        }
+
+        if(latestEncDate < yBirthdate){
+            errorMessage.innerHTML = "The latest encounter date must be greater than the youngest possible patient birthdate !"
+            dataTable.innerHTML = "";
+            return
+        }
     }
 
     for(let exporterButton of document.getElementsByClassName("exporterButton")) exporterButton.style.display = "inline-block";
@@ -86,14 +125,25 @@ function fillTable() {
     for (let i = 1; i <= numberOfPatients; i++){
         randomCodes = "\""
         codeDates = []
-        birthDate = randomDate(minimumDate, new Date());
+
+        if(advancedParams == true){
+            numberOfCodes = randomIntFromInterval(minNumberOfCodes, maxNumberOfCodes)
+            birthDate = randomDate(oBirthdate, yBirthdate);
+        }
+        else {
+            numberOfCodes = randomIntFromInterval(1, codesArray.length)
+            birthDate = randomDate(minimumDate, new Date());
+        }
         birthDateFormated = (formatDate(birthDate));
-        numberOfCodes = randomIntFromInterval(minNumberOfCodes, maxNumberOfCodes)
-        console.log(numberOfCodes)
         //random but must be 1 or less that the number of codes in the array
         for (let i = 1; i <= numberOfCodes; i++){
             let codeDate;
-            codeDate = randomDate(birthDate, new Date());
+            if(advancedParams == true){
+                codeDate = randomDate(birthDate, latestEncDate);
+            }
+            else{
+                codeDate = randomDate(birthDate, new Date());
+            }
             codeDates.push(codeDate);
             //must be before the birthdate
             codeDateFormated = formatDate(codeDate);
