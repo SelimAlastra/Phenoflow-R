@@ -41,6 +41,72 @@ block content
             .container.centerContainer
                 button.btn.btn-outline-success.defineNavBtn(onclick="submit"  value="Upload" style="margin: 10px;") SUBMIT
         hr
+        h5 Create a phenotype definitions based upon a list of keywords
+        br
+        iframe#dummyframe(name='noRedirect' style='display: none;')
+        form(method = "POST" action = "/phenoflow/importer/importKeywordlist" enctype="multipart/form-data")
+            .form-group
+                label(for='name') Phenotype name
+                input.form-control(type='text' name='name'  placeholder='Example: Rosacea' required ="") 
+                .invalid-feedback
+                    | Please insert the phenotype name. 
+            .form-group
+                label(for='about') Phenotype description
+                input.form-control(type='text' name='about'  placeholder='Example: This is an imported keyword list phenotype' required ="") 
+                .invalid-feedback
+                    | Please insert the phenotype description.
+            .form-group
+                label(for='userName2') Your username
+                input.form-control(type='text' name='userName'  placeholder='johnsmith' required ="") 
+                .invalid-feedback
+                    | Please insert your username. 
+            .form-group 
+                p A CSV file listing keywords
+                input(type="file" name="keywords")
+                .invalid-feedback
+                    | Please insert your username. 
+                
+
+            .container.centerContainer
+                button.btn.btn-outline-success.defineNavBtn(onclick="submit"  value="Upload" style="margin: 10px;") SUBMIT
+
+        hr
+        h5 Create a phenotype definitions based upon a list of steps
+        br
+        iframe#dummyframe(name='noRedirect' style='display: none;')
+        form(method = "POST" action = "/phenoflow/importer/importSteplist" enctype="multipart/form-data")
+            .form-group
+                label(for='name') Phenotype name
+                input.form-control(type='text' name='name'  placeholder='Example: Asthma' required ="") 
+                .invalid-feedback
+                    | Please insert the phenotype name. 
+            .form-group
+                label(for='about') Phenotype description
+                input.form-control(type='text' name='about'  placeholder='Example: This is an imported step-list phenotype' required ="") 
+                .invalid-feedback
+                    | Please insert the phenotype description.
+            .form-group
+                label(for='userName2') Your username
+                input.form-control(type='text' name='userName'  placeholder='johnsmith' required ="") 
+                .invalid-feedback
+                    | Please insert your username. 
+            .form-group 
+                p The list of steps, as a file formatted according to the Phenoflow import standard
+                input(type="file" name="steplist")
+                .invalid-feedback
+                    | Please insert your username.
+            .form-group 
+                p A zipped folder containing a collection of the CSVs referenced in the steplist, including branches (and their CSVs)
+                input(type="file" name="csvs")
+                .invalid-feedback
+                    | Please insert your username. 
+
+            p Note: For MACOS users, make sure to delete the "__MACOSX" folder inside the zip file. This can be done by running this command on the terminal:  zip -d filename.zip __MACOSX/\*
+                
+
+            .container.centerContainer
+                button.btn.btn-outline-success.defineNavBtn(onclick="submit"  value="Upload" style="margin: 10px;") SUBMIT
+        
         br
         br
         br
