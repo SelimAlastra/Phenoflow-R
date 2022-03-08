@@ -117,7 +117,7 @@ router.post('/importCodelists', async function(req, res, next) {
  *       200:
  *         description: Definition added
  */
-router.post('/importKeywordList', jwt({secret:config.get("jwt.RSA_PRIVATE_KEY"), algorithms:['RS256']}), async function(req, res, next) {
+router.post('/importKeywordList', async function(req, res, next) {
   req.setTimeout(0);
   if(req.files&&req.files.keywords) {
     req.body.keywords = {"filename":req.files.keywords.name, "content":await parse(req.files.keywords.data.toString())};
@@ -177,7 +177,60 @@ router.post('/importKeywordList', jwt({secret:config.get("jwt.RSA_PRIVATE_KEY"),
  *       200:
  *         description: Definition added
  */
-router.post('/importSteplist', jwt({secret:config.get("jwt.RSA_PRIVATE_KEY"), algorithms:['RS256']}), async function(req, res, next) {
+
+router.post('/importSteplist', async function(req, res, next) {
+
+  let testStepList = 
+        [{"filename":"codelist-steplist-branch-B.csv",
+          "content": [
+            {"logicType": "branch", "param": "branch-a.csv"},
+            {"logicType": "branch", "param": "branch-b.csv"}
+          ]
+        }];
+  let testBranch = 
+  [
+    {"filename":"branch-a.csv",
+    "content": [
+      {"logicType": "codelist", "param": "listA_system.csv:1"},
+      {"logicType": "codelist", "param": "listB_system.csv:1"},
+    ]},
+    {"filename":"branch-b.csv",
+    "content": [
+      {"logicType": "codelistExclude", "param": "listC_system.csv:1"},
+      {"logicType": "codelist", "param": "listD_system.csv:1"},
+  ]}];
+  let testCsv = [
+    {"filename":"listA_system.csv",
+    "content": [
+      {"ICD-10 code": "123", "description": "TermA TermB"},
+      {"ICD-10 code": "234", "description": "TermA TermC"},
+      {"ICD-10 code": "345", "description": "TermD TermE"}
+    ]},
+    {"filename":"listB_system.csv",
+    "content": [
+      {"SNOMED code": "456", "description": "TermF TermG"},
+      {"SNOMED code": "567", "description": "TermF TermH"},
+      {"SNOMED code": "678", "description": "TermI TermJ"}
+    ]},
+    {"filename":"listC_system.csv",
+    "content": [
+      {"SNOMED code": "456", "description": "TermK TermL"},
+      {"SNOMED code": "567", "description": "TermK TermL"},
+      {"SNOMED code": "678", "description": "TermK TermL"}
+    ]},
+    {"filename":"listD_system.csv",
+    "content": [
+      {"SNOMED code": "456", "description": "TermM TermN"},
+      {"SNOMED code": "567", "description": "TermM TermN"},
+      {"SNOMED code": "678", "description": "TermM TermN"}
+    ]}
+  ]
+
+  testCsvs = testCsv.concat(testBranch)
+
+  // res.send(testCsvs)
+
+
   req.setTimeout(0);
   if(req.files&&req.files.steplist&&req.files.csvs) {
     req.body.steplist = {"filename":req.files.steplist.name, "content":await parse(req.files.steplist.data.toString())};
