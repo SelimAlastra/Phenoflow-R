@@ -8,6 +8,7 @@ const logger = require("./config/winston");
 const fileUpload = require("express-fileupload");
 const cron = require("node-cron");
 const swaggerJSDoc = require('swagger-jsdoc');
+
 const swaggerDefinition = {
   openapi: '3.0.1',
   info: {
@@ -48,6 +49,7 @@ require('dotenv').config()
 const models = require("./models");
 const index = require("./routes");
 const help = require("./routes/help")
+const definePage = require("./routes/definePage")
 const forum = require("./routes/forum");
 const prototype = require("./routes/prototype");
 const dataSetGenerator = require("./routes/dataSetGenerator");
@@ -69,6 +71,8 @@ app.enable('strict routing');
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
+app.use(fileUpload()); 
+
 app.use(morgan("combined", {stream:logger.stream}));
 app.use(bodyParser.json({extended:false, limit:'50mb'}));
 app.use(bodyParser.urlencoded({limit:'50mb', extended:false, parameterLimit:50000}));
@@ -88,9 +92,10 @@ router.use("/phenotype", workflow);
 router.use("/step", step);
 router.use("/input", input);
 router.use("/output", output);
+router.use("/definePage", definePage);
 
 
-router.use(fileUpload({createParentPath:true}));
+// router.use(fileUpload({createParentPath:true}));
 router.use("/implementation", implementation);
 router.use("/importer", importer);
 router.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -114,5 +119,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
+
+
 
 module.exports = app;

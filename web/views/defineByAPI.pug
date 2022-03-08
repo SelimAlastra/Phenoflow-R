@@ -1,0 +1,55 @@
+extends layout 
+
+block content
+    span(class="restricted")
+        h3.pageTitle Upload phenotype definitions through the API
+        .container.centerContainer
+            h5 You can add a phenotype through this link by using Phenoflow endpoints with Swagger 
+            a(href = "https://kclhi.org/phenoflow/docs/#/").btn.btn-outline-success.defineBtn Add through Swagger
+            br
+            hr
+            h6 You may also use the simplified API endpoints below
+        br
+        h5 Create a phenotype definitions based upon a collection of codelists
+        br
+        iframe#dummyframe(name='noRedirect' style='display: none;')
+        form(method = "POST" action = "/phenoflow/importer/importCodelists" enctype="multipart/form-data")
+            .form-group
+                label(for='name') Phenotype name
+                input#name.form-control(type='text' name='name'  placeholder='Example: Acne' required ="") 
+                .invalid-feedback
+                    | Please insert the phenotype name. 
+            .form-group
+                label(for='about') Phenotype description
+                input#about.form-control(type='text' name='about'  placeholder='Example: This is a code list phenotype' required ="") 
+                .invalid-feedback
+                    | Please insert the phenotype description.
+            .form-group
+                label(for='userName') Your username
+                input#userName.form-control(type='text' name='userName'  placeholder='johnsmith' required ="") 
+                .invalid-feedback
+                    | Please insert your username. 
+            .form-group 
+                p A zipped folder containing a collection of codelists as CSVs
+                input(type="file" name="csvs")
+                .invalid-feedback
+                    | Please insert your username. 
+
+            p Note: For MACOS users, make sure to delete the "__MACOSX" folder inside the zip file. This can be done by running this command on the terminal:  zip -d filename.zip __MACOSX/\*
+                
+
+            .container.centerContainer
+                button.btn.btn-outline-success.defineNavBtn(onclick="submit"  value="Upload" style="margin: 10px;") SUBMIT
+        hr
+        br
+        br
+        br
+        br
+
+        script(type='text/javascript', src='/phenoflow/javascripts/defineAPI.js')
+        script(type='text/javascript', src='/phenoflow/javascripts/formValidation.js')
+
+            
+
+            
+

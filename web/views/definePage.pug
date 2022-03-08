@@ -1,0 +1,11 @@
+extends layout 
+
+block content
+    br
+    br
+    br
+    h2.pageTitle Please choose the method of adding your phenotypes definitions
+    .container.centerContainer
+        h5 There are actually two ways to add phenotype definitions on Phenoflow.
+        a(href = "/phenoflow/definePage/API").btn.btn-outline-success.defineBtn Add through API 
+        a(href = "/phenoflow/phenotype/define").btn.btn-outline-success.defineBtn() Add graphically
