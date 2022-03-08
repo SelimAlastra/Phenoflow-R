@@ -20,6 +20,7 @@ function logout() {
   localStorage.removeItem("expires_at");
   for(let authentication of document.getElementsByClassName("authentication")) authentication.style.display = "inherit";
   for(let restricted of document.getElementsByClassName("restricted")) restricted.style.display = "none";
+  if (window.location.href.indexOf("define") > -1 || window.location.href.indexOf("mine") > -1) {window.location.replace('/phenoflow')}
 
 }
 
