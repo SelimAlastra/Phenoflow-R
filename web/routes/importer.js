@@ -67,10 +67,6 @@ router.post('/importCodelists', async function(req, res, next) {
     for(let entry of zip.getEntries()) req.body.csvs.push({"filename":entry.entryName, "content":await parse(entry.getData().toString())});
     let uniqueCSVs = req.body.csvs.filter(({filename}, index)=>!req.body.csvs.map(csv=>csv.filename).includes(filename, index+1));
     req.body.about = req.body.about+" - "+ImporterUtils.hash(uniqueCSVs.map(csv=>csv.content));
-    // res.send(ImporterUtils.getCategories( req.body.csvs
-    //   , "Phenotype"))
-    // res.send(req.body.csvs)
-      
   }
   if(!req.body.csvs||!req.body.name||!req.body.about||!req.body.userName) res.status(500).send("Missing params.");
   try {

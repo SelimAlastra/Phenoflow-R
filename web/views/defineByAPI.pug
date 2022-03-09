@@ -12,7 +12,6 @@ block content
         br
         h5 Create a phenotype definitions based upon a collection of codelists
         br
-        iframe#dummyframe(name='noRedirect' style='display: none;')
         form(method = "POST" action = "/phenoflow/importer/importCodelists" enctype="multipart/form-data")
             .form-group
                 label(for='name') Phenotype name
@@ -43,7 +42,6 @@ block content
         hr
         h5 Create a phenotype definitions based upon a list of keywords
         br
-        iframe#dummyframe(name='noRedirect' style='display: none;')
         form(method = "POST" action = "/phenoflow/importer/importKeywordlist" enctype="multipart/form-data")
             .form-group
                 label(for='name') Phenotype name
@@ -73,7 +71,6 @@ block content
         hr
         h5 Create a phenotype definitions based upon a list of steps
         br
-        iframe#dummyframe(name='noRedirect' style='display: none;')
         form(method = "POST" action = "/phenoflow/importer/importSteplist" enctype="multipart/form-data")
             .form-group
                 label(for='name') Phenotype name
