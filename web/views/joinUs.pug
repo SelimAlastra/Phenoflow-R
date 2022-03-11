@@ -1,0 +1,53 @@
+extends layout 
+
+block content
+    .container 
+        h2.pageTitle Join the phenoflow team
+        container.contactUsContainer
+        br
+        h5 Please complete this form, and we will try to get back to you as soon as possible
+        hr
+        br
+        h5.contactUsConfirmationMsg #{msg}
+        br
+        form.needs-validation#frm(method = "POST" action = "joinUs" novalidate='')
+            .form-group
+                label(for='formControlInput1') Email address
+                br
+                input#formControlInput1.form-control(type='text' placeholder='name@example.com' name = "Email" required ="")
+                .invalid-feedback
+                    | Please insert an Email.
+                br
+            .form-group
+                label(for='formControlInput2') First Name
+                br
+                input#formControlInput2.form-control(type='text' placeholder='John' name = "FirstName" required ="")
+                .invalid-feedback
+                    | Please insert your first name.
+                br
+            .form-group
+                label(for='formControlInput3') Last Name 
+                br
+                input#formControlInput3.form-control(type='text' placeholder='Smith' name = "LastName" required ="")
+                .invalid-feedback
+                    | Please insert your last name.
+                br
+            .form-group
+                label(for='formControlInput3') Profession 
+                br
+                input#formControlInput3.form-control(type='text' placeholder='Researcher at ... university' name = "Profession" required ="")
+                .invalid-feedback
+                    | Please insert your last name.
+                br
+            .form-group
+                label(for='formControlTextarea1') Motivation
+                textarea#formControlTextarea1.form-control(type = 'text' rows='3' placeholder="Insert your message here..." name = "Motivation" required ="")
+                .invalid-feedback
+                    | Please insert a message.
+                br
+            
+            .container.centerContainer
+                button.btn.btn-outline-success.formBtn(type='submit') Submit !
+        
+
+        script(type='text/javascript', src='/phenoflow/javascripts/formValidation.js')

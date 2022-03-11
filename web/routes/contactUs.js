@@ -10,6 +10,60 @@ router.get("/", async function(req, res, next) {
   res.render("contactUs", {title:"Contact Us "});
 });
 
+router.get("/joinUs", async function(req, res, next) {
+
+    res.render("joinUs", {title:"Contact Us "});
+  });
+
+
+router.post("/joinUs", async function(req, res, next) {   
+    const output = `
+        <p> Registration email </p>
+        <h3> Contact details </h3>
+        <ul>
+            <li> First name : ${req.body.FirstName} </li>
+            <li> Last name : ${req.body.LastName} </li>
+            <li> Email : ${req.body.Email} </li>
+            <li> Profession : ${req.body.Profession} </li>
+        </ul>
+        <h3> Motivation </h3>
+        <p>${req.body.Motivation}</p>
+    `;
+
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth:{
+            user: process.env.nodemailerEMAIL,
+            pass: process.env.nodemailerPASS,
+            //USE .env to hide email adress
+        }
+    });
+    
+    let mailOptions = {
+        from: process.env.nodemailerEMAIL,
+        to: process.env.nodemailerEMAIL,
+        subject: 'Registration email',
+        text: 'It works',
+        html: output
+    }
+
+    transporter.sendMail(mailOptions, function(err,info){
+        if(err){
+            res.render('joinUs.pug', {
+                title: 'Sorry, an error happened !'
+            });
+            return console.log(err);
+        }
+        else{
+        console.log("Sent:" + info.response);
+        res.render('joinUs.pug', {
+            title: 'Your message has been sent !'
+        });
+    }   
+    });
+
+});
+
 router.post("/", async function(req, res, next) {   
     const output = `
         <p> You received a new message from the Contact Us page </p>
