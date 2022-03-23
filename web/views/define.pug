@@ -4,10 +4,8 @@ mixin createImplementation(currentLanguage, languages, fileName=null)
   div(class="implementation" style="padding-top: 10px;")
     span(class="implementationFileExisting")
       if fileName
-        h7 Old file name: #{fileName}
-        br
-        h7 If you plan to keep this implementation, please upload it again
-        br
+        h7.impltMsg Old file name: #{fileName}
+        h7.impltDesc (If you plan to keep this implementation, please upload it again)
     div
       br
       input(class="implementationFile" type="file" style="border: none; width: inherit; height: inherit")
@@ -52,6 +50,7 @@ mixin createStep(position, name, doc, type, inputDoc, outputDoc, outputExtension
         if implementations && implementations[0]
           a.addImplementation(onclick="addImplementation('step" + position +"'); return false;")
               +plusButton()
+          
           each implementation in implementations
               +createImplementation(implementation.language, languages, implementation.fileName)
         else
