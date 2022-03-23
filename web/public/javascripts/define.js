@@ -70,13 +70,19 @@ function addStep() {
 
   let original = document.getElementById("step1");
   let clone = original.cloneNode(true);
+
+  //for edit pages
+  for (let msg of clone.getElementsByClassName("impltMsg")) msg.innerHTML = "";
+  for (let desc of clone.getElementsByClassName("impltDesc")) desc.innerHTML = "";
+
   clone.id = "step" + ++inputSteps;
   clone.getElementsByClassName("name")[0].value = "";
   clone.getElementsByClassName("doc")[0].value = "";
   for (let type of clone.getElementsByClassName("type")) type.removeAttribute("checked")
   clone.getElementsByClassName("inputDoc")[0].value = "";
   clone.getElementsByClassName("outputDoc")[0].value = "";
-  clone.getElementsByClassName("outputExtension")[0].value = "";
+  // clone.getElementsByClassName("outputExtension")[0].value = "";
+  for (let implLang of clone.getElementsByClassName("implementationLanguage")) implLang.value = "-";
   clone.getElementsByClassName("implementationLanguage")[0].value = "-";
   clone.getElementsByClassName("implementationFileExisting")[0].style.display = "none";
   clone.getElementsByClassName("stepRemove")[0].style.display = "inline";
@@ -94,6 +100,8 @@ function addStep() {
     // console.log(typeLabel.className.split(" ").pop())
     // Fix class name 
     typeLabel.htmlFor = "step" + inputSteps + typeLabel.className.split(" ").pop()}
+
+
   original.parentNode.appendChild(clone);
 }
 
@@ -128,6 +136,10 @@ function defineValidation(){
   let phenotyeDescription = document.getElementsByClassName("workflowAbout")[0].value;
   let stepNodes = document.getElementById("steps").childNodes;
   let counter = 0;
+
+  stepTypeList = []
+
+
   for (let step of stepNodes){
     counter++;
     let inputDescription = step.getElementsByClassName("inputDoc")[0].value;
@@ -136,44 +148,101 @@ function defineValidation(){
     let stepName = step.getElementsByClassName("name")[0].value;
     let stepDescription = step.getElementsByClassName("doc")[0].value;
     let stepType;
+
+    if(!stepName){
+      document.getElementById("validationMessage").innerHTML = "Please enter the name of step " + counter + "!";
+    }
+
+    if(!stepDescription){
+      document.getElementById("validationMessage").innerHTML = "Please enter the description of step " + counter + "!";
+    }
+
+
+
     for (let potentialStepType of step.getElementsByClassName("type")) {
       if (potentialStepType.checked) stepType = potentialStepType.value;
     }
-    // console.log(stepType)
 
-    // if (outputExtension != "csv")
-    // { 
-    //   document.getElementById("validationMessage").innerHTML = "Please enter a correct output extension for step number " + counter;
-    // }
-    // if (outputExtension.length == 0)
-    // { 
-    //   document.getElementById("validationMessage").innerHTML = "Please enter the step number " + counter + " output extension";
-    // }
-    // if (outputDescription.length == 0)
-    // { 
-    //   document.getElementById("validationMessage").innerHTML = "Please enter the step number " + counter + " output description";
-    // }
-    // if (inputDescription.length == 0)
-    // { 
-    //   document.getElementById("validationMessage").innerHTML = "Please enter the step number " + counter + " input description";
-    // }
+    if(!stepType){
+      document.getElementById("validationMessage").innerHTML = "The type of step " + counter + " is not defined !";
+    }
+    else{
+      stepTypeList.push(stepType)
+    }
+
+    if (outputExtension != "csv")
+    { 
+      document.getElementById("validationMessage").innerHTML = "Please enter a correct output extension for step number " + counter;
+    }
+    if (outputExtension.length == 0)
+    { 
+      document.getElementById("validationMessage").innerHTML = "Please enter the step number " + counter + " output extension";
+    }
+    if (outputDescription.length == 0)
+    { 
+      document.getElementById("validationMessage").innerHTML = "Please enter the step number " + counter + " output description";
+    }
+    if (inputDescription.length == 0)
+    { 
+      document.getElementById("validationMessage").innerHTML = "Please enter the step number " + counter + " input description";
+    }
     let implementationCounter = 0;
     for (let implementationNode of step.getElementsByClassName("implementation")) {
+      let implementationFileName
+      let implementationFileExtension
+
       implementationCounter++
-      let implementationFile = implementationNode.getElementsByClassName("implementationFile")[0].files[0];
+      let implementationFile = implementationNode.getElementsByClassName("implementationFile")[0].files[0]
+
       let implementationLanguage = implementationNode.getElementsByClassName("implementationLanguage")[0].value
-      if(!implementationFile){document.getElementById("validationMessage").innerHTML = "The implementation file number "+ implementationCounter + " for step number " + counter;}
-      // console.log(implementationFile)
-      // console.log(implementationLanguage)
+
+      if(!implementationFile){document.getElementById("validationMessage").innerHTML = "The implementation file number "+ implementationCounter + " for step number " + counter+ " is missing !"}
+      else {
+        implementationFileName = implementationFile.name
+        implementationFileExtension = implementationFileName.split('.').pop();
+        if(implementationLanguage == "-"){document.getElementById("validationMessage").innerHTML = "The implementation language for file number "+ implementationCounter + " in step number " + counter+ " is missing !"}
+        if(implementationLanguage == "python" && implementationFileExtension != "py"){
+          document.getElementById("validationMessage").innerHTML = "The implementation language for file number "+ implementationCounter + " in step number " + counter+ " does not match the file extension !"
+        }
+        if(implementationLanguage == "javascript" && implementationFileExtension != "javascript"){
+          document.getElementById("validationMessage").innerHTML = "The implementation language for file number "+ implementationCounter + " in step number " + counter+ " does not match the file extension !"
+        }
+        if(implementationLanguage == "knime" && implementationFileExtension != "knime"){
+          document.getElementById("validationMessage").innerHTML = "The implementation language for file number "+ implementationCounter + " in step number " + counter+ " does not match the file extension !"
+        }
+      }
     }
+
   }
 
+  if (stepTypeList.length != 0){
+    //check number of steps
+    if(stepTypeList.length < 3){document.getElementById("validationMessage").innerHTML = "A functional phenotype definition must have a minimum of three steps !"}
+    else{
+      //check first step type
+      if(!((stepTypeList[0] == "load") || (stepTypeList[0] == "external"))){document.getElementById("validationMessage").innerHTML = "The first step must of type load or external!"}
+      //check last step type
+      if(stepTypeList[stepTypeList.length-1] != "output"){document.getElementById("validationMessage").innerHTML = "The last step must of type output!"}
 
-  // if (phenotyeDescription.length == 0){
-  //   document.getElementById("validationMessage").innerHTML = "Please enter a phenotype description";
-  // }
-  // if (phenotypeName.length == 0){
-  //   document.getElementById("validationMessage").innerHTML = "Please enter a phenotype name";
-  // }
+      //check other steps
+      middleStepTypeList = stepTypeList.slice()//copy complete list
+      middleStepTypeList.shift(); //remove first element
+      middleStepTypeList.pop(); //remove last element
+      for (middleStep of middleStepTypeList){
+        if(!((middleStep == "logic") ||(middleStep == "boolean")))
+        {
+          document.getElementById("validationMessage").innerHTML = "The middle steps must be either of a boolean or logic type !"
+        }
+      }
+    }
+  }
+  if (phenotyeDescription.length == 0){
+    document.getElementById("validationMessage").innerHTML = "Please enter a phenotype description";
+  }
+  if (phenotypeName.length == 0){
+    document.getElementById("validationMessage").innerHTML = "Please enter a phenotype name";
+  }
 
 }
+
+
