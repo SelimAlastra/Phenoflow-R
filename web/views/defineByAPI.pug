@@ -2,28 +2,204 @@ extends layout
 
 block content
     span(class="restricted")
+        br
+        .container.centerContainer
+            h5(class = "authentication") You have been logout, you will have to login again to use this functionality !
         h3.pageTitle Upload phenotype definitions through the API
         .container.centerContainer
             h5 You can add a phenotype through this link by using Phenoflow endpoints with Swagger 
-            a(href = "https://kclhi.org/phenoflow/docs/#/").btn.btn-outline-success.defineBtn Add through Swagger
+            a(href = "/phenoflow/docs/#/").btn.btn-outline-success.defineBtn Add through Swagger
             br
+            p Note: It is recommended to use the endpoints provided directly on Phenoflow
             hr
-            h6 You can find someone about the usage of these endpoints below
+            h6 If you decide to use Swagger to add phenotype definitions or connetors, you will need an ID token in order to do that.
             p Click on the button bellow to get your ID token. Please do not share this token with anyone.
             button.btn.btn-outline-success(onClick = "getIdToken()") Get your ID token
             br
+            br
             .container.idContainer
                 code#idTokenString
+
+        //- #accordionExample.accordion
+        //-     .card
+        //-         #headingOne.card-header
+        //-             h2.mb-0
+        //-                 button.btn.btn-link.btn-block.text-left(type='button' data-toggle='collapse' data-target='#collapseOne' aria-expanded='false' aria-controls='collapseOne')
+        //-                     | Create a phenotype definition based upon a collection of codelists
+        //-         #collapseOne.collapse(aria-labelledby='headingOne' data-parent='#accordionExample')
+        //-             .card-body
+        //-                 p - If the primary logic of a definition is to identify one or more codes from one or more codelists, these lists can be submitted directly to the Phenoflow library, which will further segment the codes in each list into logical groups (each of which is represented by an individual step) to increase intelligibility. 
+        //-                 p - If any steps identify a patient as being a case (i.e. the patient has one of the codes it stores), then we consider the patient to have the condition, i.e. there is a disjunction relationship between steps. 
+        //-                 p - The library expects the codes in each list to all belong to the same coding system and expects this system to be indicated in the filename using the following naming convention: <code class="code"> phenotype-name_system </code>(e.g. <code class ="code"> abdominal-aortic-aneurysm_icd </code>).
+        //-                 p - The content of the codelists themselves can vary; Phenoflow supports a variety of common ways to structure codelists, broadly with a column containing the codes themselves, and a description column providing more detail on each code.
+        //-                 p - Once in the correct format, codelists should be compressed and submitted as a zipped folder to the importCodelists endpoint, along with other information about the definition.
+        //-     .card
+        //-         #headingTwo.card-header
+        //-             h2.mb-0
+        //-                 button.btn.btn-link.btn-block.text-left.collapsed(type='button' data-toggle='collapse' data-target='#collapseTwo' aria-expanded='false' aria-controls='collapseTwo')
+        //-                     | Create a phenotype definition based upon a list of keywords
+        //-         #collapseTwo.collapse(aria-labelledby='headingTwo' data-parent='#accordionExample')
+        //-             .card-body
+        //-                 p Keywords are used as the basis for creating (NLP-based) definitions in much the same way as codelists. A single CSV file (with a column named <code class="code">keywords</code>) containing the keywords relating to a given condition is submitted to the importKeywordList endpoint.
+        //-     .card
+        //-         #headingThree.card-header
+        //-             h2.mb-0
+        //-                 button.btn.btn-link.btn-block.text-left.collapsed(type='button' data-toggle='collapse' data-target='#collapseThree' aria-expanded='false' aria-controls='collapseThree')
+        //-                     | Create a phenotype definition based upon a list of steps
+        //-         #collapseThree.collapse(aria-labelledby='headingThree' data-parent='#accordionExample')
+        //-             .card-body
+        //-                 p If there are specific steps to a phenotype definition, these are expressed in what we refer to as a steplist. Steplists adopt a simple syntax that allows for the logic of a phenotype definition to be expressed, or existing definitions (as, say, expressed in a flowchart) to be re-expressed, in a machine-readable form.
+        //-                 hr
+        //-                 h4 Structure
+        //-                 p Steplists are CSV files with two columns: <code class="code">logicType </code> indicating to Phenoflow which type of logic is being used within this step; and <code class="code"> params </code> which describes the chosen logic, where each individual parameter is separated by a colon. The different types of logic, and required parameters, currently supported by Phenoflow are listed in the following table:
+        //-                 br
+        //-                 table.table
+        //-                     thead
+        //-                         tr
+        //-                             th(scope='col') Logic type
+        //-                             th(scope='col') Params
+        //-                             th(scope='col') Description 
+        //-                             th(scope='col') Example
+        //-                     tbody
+        //-                         tr
+        //-                             th(scope='row') codelist
+        //-                             td [codelistA.csv]:[N - number of code ocurrences required]
+        //-                             td A step that identifies a case if the patient has N codes from the referenced codelist]
+        //-                             td codelist,abdominal-aortic-aneurysm-2_cpt.csv:1
+        //-                         tr
+        //-                             th(scope='row') codelistExclude	
+        //-                             td [codelistA.csv]
+        //-                             td A step that excludes a patient if they have 1 or more codes from the referenced codelist
+        //-                             td codelistExclude,abdominal-aortic-aneurysm-2_cpt.csv
+        //-                         tr
+        //-                             th(scope='row') age	
+        //-                             td [Min age (incl)]:[Max age (excl)]
+        //-                             td A step that excludes a patient if they do not fall within the stated age range
+        //-                             td age,40:90
+        //-                         tr
+        //-                             th(scope='row') lastEncounter
+        //-                             td [Max years]	
+        //-                             td A step that excludes patients if their last encounter with a HCP was greater than the stated number of years.
+        //-                             td lastEncounter,5
+        //-                         tr
+        //-                             th(scope='row') codelistsTemporal	
+        //-                             td [codelistA.csv]:[codelistB.csv]:[Min days (excl)]:[Max days (excl)]
+        //-                             td A step that identifies a case if a patient has a diagnosis from codelistB and a diagnsos from codelistB, and the diagnosis from codelistB was made within the stated range.
+        //-                             td codelistA.csv:codelistB.csv:10:20
+        //-                 br
+        //-                 hr
+        //-                 h4 Example
+        //-                 p The simplest steplist is one that is simply a codelist, much like a direct codelist import. Such a steplist would look like the following:
+        //-                 .container.codeContainer
+        //-                     p
+        //-                     code.code logicType,param 
+        //-                     br
+        //-                     code.code codelist,codelistA.csv:1
+        //-                     p
+        //-                 br
+        //-                 hr
+        //-                 h4 Order 
+        //-                 p With the presence of exclusion steps, the order in which logic is expressed within a Phenoflow definition is important. Once a patient is excluded, all their subsequent case steps will evaluate to unclassified by default. Consider the following example (which also serves as a general example of a more complex steplist) for AAA:
+        //-                 .container.codeContainer 
+        //-                     p 
+        //-                     code.code logicType,param
+        //-                     br
+        //-                     code.code age,40:90
+        //-                     br
+        //-                     code.code codelist,abdominal-aortic-aneurysm_cpt.csv:1
+        //-                     br
+        //-                     code.code codelist,abdominal-aortic-aneurysm_icdA.csv:1
+        //-                     br
+        //-                     code.code lastEncounter,5
+        //-                     br
+        //-                     code.code codelist,abdominal-aortic-aneurysm_icdB.csv:2
+        //-                     p 
+        //-                 br
+        //-                 p Here, any patients that fall outside the age range will be instantly excluded. However, patients with codes from <code class="code">abdominal-aortic-aneurysm_cpt </code> and  <code class="code">abdominal-aortic-aneurysm_icdA</code> will still be flagged as cases, even if later excluded due to the last encounter logic. In this way, we are able to represent different case types, with certain exclusions only applying to certain case types.
+        //-                 br
+        //-                 hr
+        //-                 h4 Importing a steplist
+        //-                 p A steplist CSV should be submitted along with a zipped folder containing all referenced codelists to the importSteplist endpoint, along with relevant details of the definition.
+
+        //-     .card
+        //-         #headingThreeBis.card-header
+        //-             h2.mb-0
+        //-                 button.btn.btn-link.btn-block.text-left.collapsed(type='button' data-toggle='collapse' data-target='#collpaseThreeBis' aria-expanded='false' aria-controls='collpaseThreeBis')
+        //-                     | Create a phenotype definition based upon a list of steps (with branches)
+        //-         #collpaseThreeBis.collapse(aria-labelledby='headingThreeBis' data-parent='#accordionExample')
+        //-             .card-body
+        //-                 p The phenotypes represented using the Phenoflow model typically consist of a single branch, where the disjunction relationship between steps means that if any of the steps indicate that a patient is a case (subject to no prior exclusions) they are considered to have the condition being modelled. However, more complex definitions may contain multiple branches.
+        //-                 br
+        //-                 p As discussed in the model overview, branches are flattened into individual steps within the Phenoflow model. To demonstrate this visually, we can consider the following abstract definition:
+        //-                 container.centerContainer
+        //-                     img(src="/phenoflow/images/StepBranch1.png" class="box").APIimg
+        //-                 br
+        //-                 p Here, a patient with codes from lists A, B and D is a case, and a patient without any codes from list A and with codes from list C is also a case. Within the Phenoflow model, this logic is represented as follows: 
+        //-                 container.centerContainer
+        //-                     img(src="/phenoflow/images/StepBranch2.png" class="box").APIimg
+        //-                 br
+        //-                 p Here, two steps summarise each branch (joined by a traditional disjunction relationship, which is also true of the relationship between branches), and each condition within the branch must be true in order for that step to resolve, overall, to a 'CASE' value. This differs from the traditional disjunction relationship between steps.
+        //-                 br
+        //-                 hr
+        //-                 h4 Steplists and branches 
+        //-                 br
+        //-                 p To import a definition with branches into Phenoflow, each branch is represented as a steplist, with these lists referenced in a parent steplist.
+        //-                 br
+        //-                 p For example, to represent the left-most branch of the definition above, a file called <code class="code"> branchA.csv</code class="code"> might look like the following
+        //-                 .container.codeContainer 
+        //-                     .code.code logicType,param
+                            
+        //-                     .code.code codelist,codelistA.csv:1
+                            
+        //-                     .code.code codelist,codelistB.csv:1
+                            
+        //-                     .code.code codelist,codelistD.csv:1
+        //-                 br
+        //-                 p And, to represent the right-most branch, a file called <code class="code"> branchB.csv </code> might look like the following:
+        //-                 .container.codeContainer 
+        //-                     .code.code logicType,param
+                            
+        //-                     .code.code codelistExclude,codelistA.csv
+                            
+        //-                     .code.code codelist,codelistB.csv:1
+                            
+        //-                     .code.code codelist,codelistC.csv
+        //-                 br
+        //-                 p Finally, to connect these branches, our parent steplist would be structured as follows. Note the new identifier <code class="code">branch </code>:
+        //-                 .container.codeContainer 
+        //-                     .code.code logicType,param
+                            
+        //-                     .code.code branch,branchA.csv
+                            
+        //-                     .code.code branch,branchB.csv
+        //-                 br
+        //-                 hr
+        //-                 h4 Importing a steplist with branches
+        //-                 br
+        //-                 p To upload a definition to Phenoflow that contains branches, the parent steplist should be collected along with a zipped folder containing any codelists referenced from the parent steplist as well as any branch CSVs, and the codelists they reference. These should all be submitted to the importSteplist endpoint, along with relevant details of the definition.
+        //-     .card
+        //-         #headingFour.card-header
+        //-             h2.mb-0
+        //-                 button.btn.btn-link.btn-block.text-left.collapsed(type='button' data-toggle='collapse' data-target='#collapseFour' aria-expanded='false' aria-controls='collapseThree')
+        //-                     | Add a new connector to an existing phenotype definition
+        //-         #collapseFour.collapse(aria-labelledby='headingFour' data-parent='#accordionExample')
+        //-             .card-body
+        //-                 | And lastly, the placeholder content for the third and final accordion panel. This panel is hidden by default.
+        hr
         br
+        h5 Create a phenotype definition based upon a collection of codelists
         br
         #accordionExample.accordion
             .card
                 #headingOne.card-header
                     h2.mb-0
                         button.btn.btn-link.btn-block.text-left(type='button' data-toggle='collapse' data-target='#collapseOne' aria-expanded='false' aria-controls='collapseOne')
-                            | Create a phenotype definitions based upon a collection of codelists
+                            | Help
                 #collapseOne.collapse(aria-labelledby='headingOne' data-parent='#accordionExample')
                     .card-body
+                        br
+                        h5 Note: We recommend writing the CSV files with editors such as atom. CSV editors such as excel may write the file in an unwanted format.
+                        br
                         p - If the primary logic of a definition is to identify one or more codes from one or more codelists, these lists can be submitted directly to the Phenoflow library, which will further segment the codes in each list into logical groups (each of which is represented by an individual step) to increase intelligibility. 
                         p - If any steps identify a patient as being a case (i.e. the patient has one of the codes it stores), then we consider the patient to have the condition, i.e. there is a disjunction relationship between steps. 
                         p - The library expects the codes in each list to all belong to the same coding system and expects this system to be indicated in the filename using the following naming convention: <code class="code"> phenotype-name_system </code>(e.g. <code class ="code"> abdominal-aortic-aneurysm_icd </code>).
@@ -32,17 +208,138 @@ block content
             .card
                 #headingTwo.card-header
                     h2.mb-0
-                        button.btn.btn-link.btn-block.text-left.collapsed(type='button' data-toggle='collapse' data-target='#collapseTwo' aria-expanded='false' aria-controls='collapseTwo')
-                            | Create a phenotype definitions based upon a list of keywords
+                        button.btn.btn-link.btn-block.text-left(type='button' data-toggle='collapse' data-target='#collapseTwo' aria-expanded='false' aria-controls='collapseOne')
+                            | Codelist CSV format 
+
                 #collapseTwo.collapse(aria-labelledby='headingTwo' data-parent='#accordionExample')
                     .card-body
-                        p Keywords are used as the basis for creating (NLP-based) definitions in much the same way as codelists. A single CSV file (with a column named <code class="code">keywords</code>) containing the keywords relating to a given condition is submitted to the importKeywordList endpoint.
+                        h6 Note: Your ZIP file may contain multiple codelists
+                        br
+                        h5 Format: 
+                        code.code typeOfCode, description
+                        br
+                        code.code code id, code description
+                        br
+                        code.code code id 2, code description 2
+                        br
+                        code.code ...
+                        br
+                        br
+                        h5 Example:
+                        code.code ICD-10 code, description
+                        br
+                        code.code 123, This is the description of code 123
+                        br
+                        code.code 234, This is the description of code 234
+                        br
+                        code.code ...
+                        
+        
+        br
+        form#codelistForm(onsubmit="return false")
+            .form-group
+                label(for='name') Phenotype name
+                input#name1.form-control(type='text' name='name'  placeholder='Example: Acne' required ="") 
+                .invalid-feedback
+                    | Please insert the phenotype name. 
+            .form-group
+                label(for='about') Phenotype description
+                input#about.form-control(type='text' name='about'  placeholder='Example: This is a code list phenotype' required ="") 
+                .invalid-feedback
+                    | Please insert the phenotype description.
+            .form-group 
+                p A zipped folder containing a collection of codelists as CSVs
+                input#csvs(type="file" name="csvs").codelistFile
+                .invalid-feedback
+                    | Please insert your username. 
+
+            p Note: For MACOS users, make sure to delete the "__MACOSX" folder inside the zip file. This can be done by running this command on the terminal:  zip -d filename.zip __MACOSX/\*
+            h6.validationMessage#importCodeListValidation
+            h5.successValidationMessage#importCodeListValidationSuccess
+
+            .container.centerContainer
+                button.btn.btn-outline-success.defineNavBtn(style="margin: 10px;" id="codeListSubmit") SUBMIT
+
+        hr
+        h5 Create a phenotype definition based upon a list of keywords
+        br
+        #accordionExample.accordion
             .card
                 #headingThree.card-header
                     h2.mb-0
-                        button.btn.btn-link.btn-block.text-left.collapsed(type='button' data-toggle='collapse' data-target='#collapseThree' aria-expanded='false' aria-controls='collapseThree')
-                            | Create a phenotype definitions based upon a list of steps
+                        button.btn.btn-link.btn-block.text-left(type='button' data-toggle='collapse' data-target='#collapseThree' aria-expanded='false' aria-controls='collapseOne')
+                            | Help
                 #collapseThree.collapse(aria-labelledby='headingThree' data-parent='#accordionExample')
+                    .card-body
+                        br
+                        h5 Note: We recommend writing the CSV files with editors such as atom. CSV editors such as excel may write the file in an unwanted format.
+                        br
+                        p Keywords are used as the basis for creating (NLP-based) definitions in much the same way as codelists. A single CSV file (with a column named <code class="code">keywords</code>) containing the keywords relating to a given condition is submitted to the importKeywordList endpoint.
+            .card
+                #headingFour.card-header
+                    h2.mb-0
+                        button.btn.btn-link.btn-block.text-left(type='button' data-toggle='collapse' data-target='#collapseFour' aria-expanded='false' aria-controls='collapseOne')
+                            | Keywords CSV format 
+
+                #collapseFour.collapse(aria-labelledby='headingFour' data-parent='#accordionExample')
+                    .card-body
+                        h5 Format: 
+                        code.code keyword
+                        br
+                        code.code description 1
+                        br
+                        code.code description 2
+                        br
+                        code.code ...
+                        br
+                        br
+                        h5 Example:
+                        code.code keyword
+                        br
+                        code.code TermA TermB
+                        br
+                        code.code TermA TermC
+                        br
+                        code.code TermD TermE
+                        br
+                        code.code ...
+                        
+        
+        br
+        form#keyWordsForm(onsubmit="return false")
+            .form-group
+                label(for='name') Phenotype name
+                input.form-control(type='text' name='name'  placeholder='Example: Rosacea' required ="") 
+                .invalid-feedback
+                    | Please insert the phenotype name. 
+            .form-group
+                label(for='about') Phenotype description
+                input.form-control(type='text' name='about'  placeholder='Example: This is an imported keyword list phenotype' required ="") 
+                .invalid-feedback
+                    | Please insert the phenotype description.
+            .form-group 
+                p A CSV file listing keywords
+                input(type="file" name="keywords")
+                .invalid-feedback
+                    | Please insert your username. 
+                
+            h6.validationMessage#keyWordsValidation
+            h5.successValidationMessage#keyWordsValidationSuccess
+            .container.centerContainer
+                button.btn.btn-outline-success.defineNavBtn(style="margin: 10px;" id= "keyWordsSubmit" ) SUBMIT
+        
+
+        hr
+        h5 Create a phenotype definition based upon a list of steps
+
+        br
+        #accordionExample.accordion
+            .card
+                #headingFive.card-header
+                    h2.mb-0
+                        button.btn.btn-link.btn-block.text-left(type='button' data-toggle='collapse' data-target='#collapseFive' aria-expanded='false' aria-controls='collapseOne')
+                            | Help
+                #collapseFive.collapse(aria-labelledby='headingFive' data-parent='#accordionExample')
                     .card-body
                         p If there are specific steps to a phenotype definition, these are expressed in what we refer to as a steplist. Steplists adopt a simple syntax that allows for the logic of a phenotype definition to be expressed, or existing definitions (as, say, expressed in a flowchart) to be re-expressed, in a machine-readable form.
                         hr
@@ -116,13 +413,12 @@ block content
                         hr
                         h4 Importing a steplist
                         p A steplist CSV should be submitted along with a zipped folder containing all referenced codelists to the importSteplist endpoint, along with relevant details of the definition.
-
             .card
-                #headingThreeBis.card-header
+                #headingSix.card-header
                     h2.mb-0
-                        button.btn.btn-link.btn-block.text-left.collapsed(type='button' data-toggle='collapse' data-target='#collpaseThreeBis' aria-expanded='false' aria-controls='collpaseThreeBis')
-                            | Create a phenotype definitions based upon a list of steps (with branches)
-                #collpaseThreeBis.collapse(aria-labelledby='headingThreeBis' data-parent='#accordionExample')
+                        button.btn.btn-link.btn-block.text-left(type='button' data-toggle='collapse' data-target='#collapseSix' aria-expanded='false' aria-controls='collapseOne')
+                            | Help about defined steps with branches
+                #collapseSix.collapse(aria-labelledby='headingSix' data-parent='#accordionExample')
                     .card-body
                         p The phenotypes represented using the Phenoflow model typically consist of a single branch, where the disjunction relationship between steps means that if any of the steps indicate that a patient is a case (subject to no prior exclusions) they are considered to have the condition being modelled. However, more complex definitions may contain multiple branches.
                         br
@@ -174,78 +470,91 @@ block content
                         br
                         p To upload a definition to Phenoflow that contains branches, the parent steplist should be collected along with a zipped folder containing any codelists referenced from the parent steplist as well as any branch CSVs, and the codelists they reference. These should all be submitted to the importSteplist endpoint, along with relevant details of the definition.
             .card
-                #headingFour.card-header
+                #headingSeven.card-header
                     h2.mb-0
-                        button.btn.btn-link.btn-block.text-left.collapsed(type='button' data-toggle='collapse' data-target='#collapseFour' aria-expanded='false' aria-controls='collapseThree')
-                            | Add a new connector to an existing phenotype definition
-                #collapseFour.collapse(aria-labelledby='headingFour' data-parent='#accordionExample')
+                        button.btn.btn-link.btn-block.text-left(type='button' data-toggle='collapse' data-target='#collapseSeven' aria-expanded='false' aria-controls='collapseOne')
+                            | Format of codelists and branches to include in the ZIP file
+
+                #collapseSeven.collapse(aria-labelledby='headingSeven' data-parent='#accordionExample')
                     .card-body
-                        | And lastly, the placeholder content for the third and final accordion panel. This panel is hidden by default.
-        br
-        br
-        hr
-        h5 Create a phenotype definitions based upon a collection of codelists
-        br
-        form(method = "POST" action = "/phenoflow/importer/importCodelists" enctype="multipart/form-data")
-            .form-group
-                label(for='name') Phenotype name
-                input#name.form-control(type='text' name='name'  placeholder='Example: Acne' required ="") 
-                .invalid-feedback
-                    | Please insert the phenotype name. 
-            .form-group
-                label(for='about') Phenotype description
-                input#about.form-control(type='text' name='about'  placeholder='Example: This is a code list phenotype' required ="") 
-                .invalid-feedback
-                    | Please insert the phenotype description.
-            .form-group
-                label(for='userName') Your username
-                input#userName.form-control(type='text' name='userName'  placeholder='johnsmith' required ="") 
-                .invalid-feedback
-                    | Please insert your username. 
-            .form-group 
-                p A zipped folder containing a collection of codelists as CSVs
-                input(type="file" name="csvs")
-                .invalid-feedback
-                    | Please insert your username. 
+                        h6 The zipped file must contain the codelists and the branches
+                        br
+                        h5 Codelists (in csv)
+                        hr
+                        h6 The format used for the collection of CSVs is the same as the ones for codelists
+                        br
+                        h5 Format: 
+                        code.code typeOfCode, description
+                        br
+                        code.code code id, code description
+                        br
+                        code.code code id 2, code description 2
+                        br
+                        code.code ...
+                        br
+                        br
+                        h5 Example:
+                        code.code ICD-10 code, description
+                        br
+                        code.code 123, This is the description of code 123
+                        br
+                        code.code 234, This is the description of code 234
+                        br
+                        code.code ...
+                        br
+                        hr
+                        h5 Branches (in csv)
+                        hr
+                        h5 Format: 
+                        code.code logicType, params
+                        br
+                        code.code logicType1, params1
+                        br
+                        code.code code id 2, parmams2
+                        br
+                        code.code ...
+                        br
+                        br
+                        h5 Example:
+                        code.code logicType, params
+                        br
+                        code.code 40:90, This is the description of code 123
+                        br
+                        code.code codelist,abdominal-aortic-aneurysm_cpt.csv:1
+                        br
+                        code.code ...
+            .card
+                #headingEight.card-header
+                    h2.mb-0
+                        button.btn.btn-link.btn-block.text-left(type='button' data-toggle='collapse' data-target='#collapseEight' aria-expanded='false' aria-controls='collapseOne')
+                            | Format of the list of steps
 
-            p Note: For MACOS users, make sure to delete the "__MACOSX" folder inside the zip file. This can be done by running this command on the terminal:  zip -d filename.zip __MACOSX/\*
-                
+                #collapseEight.collapse(aria-labelledby='headingEight' data-parent='#accordionExample')
+                    .card-body
+                        h5 Format: 
+                        code.code logicType, params
+                        br
+                        code.code logicType1, params1
+                        br
+                        code.code logicType2, parmams2
+                        br
+                        code.code ...
+                        br
+                        br
+                        h5 Example:
+                        code.code logicType, params
+                        br
+                        code.code codelist,listA_system.csv:1
+                        br
+                        code.code branch,branch-a.csv
+                        br
+                        code.code codelist,listB_system.csv:1
 
-            .container.centerContainer
-                button.btn.btn-outline-success.defineNavBtn(onclick="submit"  value="Upload" style="margin: 10px;") SUBMIT
-        hr
-        h5 Create a phenotype definitions based upon a list of keywords
+
+
+
         br
-        form(method = "POST" action = "/phenoflow/importer/importKeywordlist" enctype="multipart/form-data")
-            .form-group
-                label(for='name') Phenotype name
-                input.form-control(type='text' name='name'  placeholder='Example: Rosacea' required ="") 
-                .invalid-feedback
-                    | Please insert the phenotype name. 
-            .form-group
-                label(for='about') Phenotype description
-                input.form-control(type='text' name='about'  placeholder='Example: This is an imported keyword list phenotype' required ="") 
-                .invalid-feedback
-                    | Please insert the phenotype description.
-            .form-group
-                label(for='userName2') Your username
-                input.form-control(type='text' name='userName'  placeholder='johnsmith' required ="") 
-                .invalid-feedback
-                    | Please insert your username. 
-            .form-group 
-                p A CSV file listing keywords
-                input(type="file" name="keywords")
-                .invalid-feedback
-                    | Please insert your username. 
-                
-
-            .container.centerContainer
-                button.btn.btn-outline-success.defineNavBtn(onclick="submit"  value="Upload" style="margin: 10px;") SUBMIT
-
-        hr
-        h5 Create a phenotype definitions based upon a list of steps
-        br
-        form(method = "POST" action = "/phenoflow/importer/importSteplist" enctype="multipart/form-data")
+        form#stepListForm(onsubmit="return false")
             .form-group
                 label(for='name') Phenotype name
                 input.form-control(type='text' name='name'  placeholder='Example: Asthma' required ="") 
@@ -256,13 +565,8 @@ block content
                 input.form-control(type='text' name='about'  placeholder='Example: This is an imported step-list phenotype' required ="") 
                 .invalid-feedback
                     | Please insert the phenotype description.
-            .form-group
-                label(for='userName2') Your username
-                input.form-control(type='text' name='userName'  placeholder='johnsmith' required ="") 
-                .invalid-feedback
-                    | Please insert your username. 
             .form-group 
-                p The list of steps, as a file formatted according to the Phenoflow import standard
+                p The list of steps, as a file formatted according to the Phenoflow import standard (the file must have a csv extension)
                 input(type="file" name="steplist")
                 .invalid-feedback
                     | Please insert your username.
@@ -274,9 +578,11 @@ block content
 
             p Note: For MACOS users, make sure to delete the "__MACOSX" folder inside the zip file. This can be done by running this command on the terminal:  zip -d filename.zip __MACOSX/\*
                 
+            h6.validationMessage#stepListValidation
+            h5.successValidationMessage#stepListValidationSuccess
 
             .container.centerContainer
-                button.btn.btn-outline-success.defineNavBtn(onclick="submit"  value="Upload" style="margin: 10px;") SUBMIT
+                button.btn.btn-outline-success.defineNavBtn(id= 'stepListSubmit' style="margin: 10px;") SUBMIT
         
         br
         br
