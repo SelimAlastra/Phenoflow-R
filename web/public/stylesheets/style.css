@@ -419,3 +419,7 @@ input[type=radio]:checked + label>div {
 .impltDesc{
   margin:5px;
 }
+
+.successValidationMessage{
+  color: #1b583e;
+}

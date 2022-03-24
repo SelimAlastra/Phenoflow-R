@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "adm-zip": "^0.5.9",
+    "ajax": "^0.0.4",
     "archiver": "^5.3.0",
     "await-spawn": "^4.0.2",
     "bcrypt": "^5.0.1",
@@ -29,6 +30,7 @@
     "he": "^1.2.0",
     "http-errors": "^1.8.0",
     "isomorphic-git": "^1.10.1",
+    "jquery": "^3.6.0",
     "jsonwebtoken": "^8.5.1",
     "markdown-to-json": "^0.5.4",
     "morgan": "^1.10.0",
