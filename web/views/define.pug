@@ -1,5 +1,6 @@
 extends layout
 
+
 mixin createImplementation(currentLanguage, languages, fileName=null)
   div(class="implementation" style="padding-top: 10px;")
     span(class="implementationFileExisting")
@@ -89,9 +90,67 @@ block content
   br
   br
   container.centerContainer
-    h4#validationMessage.validationMessage
-  br
+    h5(class = "authentication") You have been logout, you will have to login again to use this functionality !
   span(class="restricted")
+    container.centerContainer
+      .custom-control.custom-switch
+        input#advancedParamsSwitch.custom-control-input(type='checkbox'  data-toggle='collapse' href='#collapseHelp' role='button' aria-expanded='false' aria-controls='collapseExample')
+        label.custom-control-label(for='advancedParamsSwitch') Display help section
+    br
+    br
+    #collapseHelp.collapse
+      #accordionExample.accordion
+        .card
+            #headingOne.card-header
+              h2.mb-0
+                button.btn.btn-link.btn-block.text-left(type='button' data-toggle='collapse' data-target='#collapse1' aria-expanded='false' aria-controls='collapseOne')
+                  | How many steps are required to form a phenotype definition ?
+            #collapse1.collapse(aria-labelledby='headingOne' data-parent='#accordionExample')
+              .card-body
+                  br
+                  p A minimum of three steps is required to form a functional phenotype definition
+        .card
+            #headingTwo.card-header
+              h2.mb-0
+                button.btn.btn-link.btn-block.text-left(type='button' data-toggle='collapse' data-target='#collapse2' aria-expanded='false' aria-controls='collapseOne')
+                  | What types of steps are required to form a function phenotype definition
+            #collapse2.collapse(aria-labelledby='headingTwo' data-parent='#accordionExample')
+              .card-body
+                  br
+                  p The phenotype definition must start by "load"/"external" step, then it will be followed by "logic" or "boolean" steps. Finally, the last step must be of an output type. Failing in following this order will create deficient phenotype definitions.
+        .card
+            #headingThree.card-header
+              h2.mb-0
+                button.btn.btn-link.btn-block.text-left(type='button' data-toggle='collapse' data-target='#collapse3' aria-expanded='false' aria-controls='collapseOne')
+                  | What types of extensions are supported by Phenoflow for step outputs ? 
+            #collapse3.collapse(aria-labelledby='headingThree' data-parent='#accordionExample')
+              .card-body
+                  br
+                  p Phenoflow only handles step outputs with "csv" extensions for the moment
+        .card
+            #headingFour.card-header
+              h2.mb-0
+                button.btn.btn-link.btn-block.text-left(type='button' data-toggle='collapse' data-target='#collapse4' aria-expanded='false' aria-controls='collapseOne')
+                  | I have difficulties creating an implementation for a specific step
+            #collapse4.collapse(aria-labelledby='headingFour' data-parent='#accordionExample')
+              .card-body
+                  br
+                  p Authors should have sufficient knowledge to create implementations for phenotype definitions independently. Suppose you are stuck in the development of a particular implementation. In that case, the best way to resolve this problem will be to look at implementations of existing phenotypes listed in the Phenoflow application.
+        .card
+            #headingFive.card-header
+              h2.mb-0
+                button.btn.btn-link.btn-block.text-left(type='button' data-toggle='collapse' data-target='#collapse5' aria-expanded='false' aria-controls='collapseOne')
+                  | What type of step should I use for connectors such IB2B, OMOP or FHIR / What of step should I use for local CSV reads ? 
+            #collapse5.collapse(aria-labelledby='headingFive' data-parent='#accordionExample')
+              .card-body
+                  br
+                  p For local CSV reads, the load step should be selection. However, for connectors such as IB2B, OMOP or FHIR, steps of type "external" should be used.
+
+    br
+    br
+    container.centerContainer
+      h4#validationMessage.validationMessage
+    br
     div(class="container")
       div(id="steps")
         if workflow && workflow.steps && workflow.steps[0]
