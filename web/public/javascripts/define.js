@@ -131,7 +131,8 @@ function addImplementation(stepInputId) {
 
 function defineValidation(){
   document.getElementById("validationMessage").innerHTML = "";
-  // reset validation message
+  document.getElementById("validationMessageSuccess").innerHTML = "";
+  // reset validation messages
   let phenotypeName = document.getElementsByClassName("workflowName")[0].value;
   let phenotyeDescription = document.getElementsByClassName("workflowAbout")[0].value;
   let stepNodes = document.getElementById("steps").childNodes;
@@ -151,10 +152,12 @@ function defineValidation(){
 
     if(!stepName){
       document.getElementById("validationMessage").innerHTML = "Please enter the name of step " + counter + "!";
+      return
     }
 
     if(!stepDescription){
       document.getElementById("validationMessage").innerHTML = "Please enter the description of step " + counter + "!";
+      return
     }
 
 
@@ -165,6 +168,7 @@ function defineValidation(){
 
     if(!stepType){
       document.getElementById("validationMessage").innerHTML = "The type of step " + counter + " is not defined !";
+      return
     }
     else{
       stepTypeList.push(stepType)
@@ -173,18 +177,22 @@ function defineValidation(){
     if (outputExtension != "csv")
     { 
       document.getElementById("validationMessage").innerHTML = "Please enter a correct output extension for step number " + counter;
+      return
     }
     if (outputExtension.length == 0)
     { 
       document.getElementById("validationMessage").innerHTML = "Please enter the step number " + counter + " output extension";
+      return
     }
     if (outputDescription.length == 0)
     { 
       document.getElementById("validationMessage").innerHTML = "Please enter the step number " + counter + " output description";
+      return
     }
     if (inputDescription.length == 0)
     { 
       document.getElementById("validationMessage").innerHTML = "Please enter the step number " + counter + " input description";
+      return
     }
     let implementationCounter = 0;
     for (let implementationNode of step.getElementsByClassName("implementation")) {
@@ -196,19 +204,24 @@ function defineValidation(){
 
       let implementationLanguage = implementationNode.getElementsByClassName("implementationLanguage")[0].value
 
-      if(!implementationFile){document.getElementById("validationMessage").innerHTML = "The implementation file number "+ implementationCounter + " for step number " + counter+ " is missing !"}
+      if(!implementationFile){document.getElementById("validationMessage").innerHTML = "The implementation file number "+ implementationCounter + " for step number " + counter+ " is missing !"
+      return}
       else {
         implementationFileName = implementationFile.name
         implementationFileExtension = implementationFileName.split('.').pop();
-        if(implementationLanguage == "-"){document.getElementById("validationMessage").innerHTML = "The implementation language for file number "+ implementationCounter + " in step number " + counter+ " is missing !"}
+        if(implementationLanguage == "-"){document.getElementById("validationMessage").innerHTML = "The implementation language for file number "+ implementationCounter + " in step number " + counter+ " is missing !"
+        return}
         if(implementationLanguage == "python" && implementationFileExtension != "py"){
           document.getElementById("validationMessage").innerHTML = "The implementation language for file number "+ implementationCounter + " in step number " + counter+ " does not match the file extension !"
+          return
         }
         if(implementationLanguage == "javascript" && implementationFileExtension != "javascript"){
           document.getElementById("validationMessage").innerHTML = "The implementation language for file number "+ implementationCounter + " in step number " + counter+ " does not match the file extension !"
+          return
         }
         if(implementationLanguage == "knime" && implementationFileExtension != "knime"){
           document.getElementById("validationMessage").innerHTML = "The implementation language for file number "+ implementationCounter + " in step number " + counter+ " does not match the file extension !"
+          return
         }
       }
     }
@@ -217,12 +230,15 @@ function defineValidation(){
 
   if (stepTypeList.length != 0){
     //check number of steps
-    if(stepTypeList.length < 3){document.getElementById("validationMessage").innerHTML = "A functional phenotype definition must have a minimum of three steps !"}
+    if(stepTypeList.length < 3){document.getElementById("validationMessage").innerHTML = "A functional phenotype definition must have a minimum of three steps !"
+    return}
     else{
       //check first step type
-      if(!((stepTypeList[0] == "load") || (stepTypeList[0] == "external"))){document.getElementById("validationMessage").innerHTML = "The first step must of type load or external!"}
+      if(!((stepTypeList[0] == "load") || (stepTypeList[0] == "external"))){document.getElementById("validationMessage").innerHTML = "The first step must of type load or external!"
+      return}
       //check last step type
-      if(stepTypeList[stepTypeList.length-1] != "output"){document.getElementById("validationMessage").innerHTML = "The last step must of type output!"}
+      if(stepTypeList[stepTypeList.length-1] != "output"){document.getElementById("validationMessage").innerHTML = "The last step must of type output!" 
+      return}
 
       //check other steps
       middleStepTypeList = stepTypeList.slice()//copy complete list
@@ -232,16 +248,21 @@ function defineValidation(){
         if(!((middleStep == "logic") ||(middleStep == "boolean")))
         {
           document.getElementById("validationMessage").innerHTML = "The middle steps must be either of a boolean or logic type !"
+          return
         }
       }
     }
   }
   if (phenotyeDescription.length == 0){
     document.getElementById("validationMessage").innerHTML = "Please enter a phenotype description";
+    return
   }
   if (phenotypeName.length == 0){
     document.getElementById("validationMessage").innerHTML = "Please enter a phenotype name";
+    return
   }
+
+  document.getElementById("validationMessageSuccess").innerHTML = "The phenotype definition was saved !";
 
 }
 
