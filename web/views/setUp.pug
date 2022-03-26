@@ -8,8 +8,6 @@ block content
         p Welcome to the Set Up page, on this page you will find how to use Phenoflow on your computer depending on your operating system.
         p If you find any difficulties using Phenoflow, don't hesitate to ask us questions through the <a href = '/phenoflow/contactUs' class ="contactUsLink" > contact us</a> page.
         hr
-        h3 Mac-OS
-        hr
         br
         h5 1. Install the prequesites
         .setUpTable
@@ -22,14 +20,10 @@ block content
                     tbody
                         tr
                             th(scope='row') 1.1
-                            td Open the terminal (You can find it your computer applications) </a>
+                            td Install docker using this <a href =https://docs.docker.com/get-docker/ class ="contactUsLink"> link </a> and follow the instructions provided by Docker website.
                             td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
                         tr
                             th(scope='row') 1.2
-                            td Install docker using this <a href =https://docs.docker.com/desktop/mac/install/ class ="contactUsLink"> link </a> and follow the instructions provided by Docker website.
-                            td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
-                        tr
-                            th(scope='row') 1.3
                             td Install CWLTool using this <a href =https://github.com/common-workflow-language/cwltool#install class ="contactUsLink"> link </a> and follow the instructions on the website.
                             td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
                         
@@ -50,17 +44,62 @@ block content
                             td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
                         tr
                             th(scope='row') 2.2
-                            td Download the phenotype
+                            td [Optional] Customise the phenotype implementations and/or connectors
                             td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
                         tr
                             th(scope='row') 2.3
+                            td Download the phenotype
+                            td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
+                        tr
+                            th(scope='row') 2.4
                             td Place the phenotype folder in a specific location (Optional)
                             td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
 
         br
-        h5 3. Test the phenotype 
-        .setUpTable
-            table.table.table-sm
+        br
+        select.custom-select#typeOfRun.form-control
+            option(value='0') Run a phenotype against a local data-set
+            option(value='1') Run a phenotype using an IB2B connector
+            option(value='2') Run a phenotype using an FHIR connector
+            option(value='3') Run a phenotype using an OMOP connector
+        br
+        br
+        container.centerContainer
+            p Please select if you are using a local data-set or an external connector
+        br
+        br
+        span(id ="localSpan")
+            h5 3. Add your local data set 
+            .setUpTable
+                table.table.table-sm
+                        thead
+                            tr
+                            th(scope='col') Step
+                            th(scope='col') What to do ? 
+                            th(scope='col') Check
+                        tbody
+                            tr
+                                th(scope='row') 3.1
+                                td Replace the "replaceMe.csv" with your dataset (must be a CSV file). If you don't know how how to create a data set for your phenotype, check this pagge <a href ="/phenoflow/datasetGenerator" class ="contactUsLink"> link </a>
+                                td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
+                            tr
+                                th(scope='row') 3.2
+                                td Open [PhenotypeName]-inputs.yml (e.g : If your phenotype is "Acne" the file will be called Acne-inputs.yml) with a text editor (e.g : Atom)
+                                td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
+                            tr
+                                th(scope='row') 3.3
+                                td Change the potentialCases path with your CSV data file name. (Don't forget to write .csv at the end of your file name)
+                                td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
+                                
+            br    
+            h6 Note: Step 3.2 and 3.3 are optionals if you name your dataset input "replaceMe.csv" as the old file
+        span(id ="ib2bSpan")
+            h5 3. IB2B connector setup
+            br
+            p Note: IB2B connectors are only used through javascript for the momement in Phenoflow
+            br
+            .setUpTable
+                table.table.table-sm
                     thead
                         tr
                         th(scope='col') Step
@@ -69,18 +108,113 @@ block content
                     tbody
                         tr
                             th(scope='row') 3.1
-                            td Replace the "replaceMe.csv" with your dataset (must be a CSV file). If you don't know how how to create a data set for your phenotype. Check this <a href ="/" class ="contactUsLink"> link </a>
+                            td Open the "js" folder inside your phenotype definiton directory
                             td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
                         tr
                             th(scope='row') 3.2
-                            td Open [Phenotype name]-inputs.yml (e.g : If my phenotype is "Acne" the file will be called Acne-inputs.yml) with a text editor (e.g : Atom)
+                            td Open "read-potential-cases-i2b2.js" file with a text editor such as atom
                             td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
                         tr
                             th(scope='row') 3.3
-                            td Change the potentialCases path with your CSV data file name. (Don't forget to write .csv at the end of your file name)
+                            td Insert your IB2B endpoint (example : 'http://localhost:8081')
                             td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
-                            
-        br    
-        h6 Note: Step 3.2 and 3.3 are optionals if you name your dataset input "replaceMe.csv" as the old file
+                        tr
+                            th(scope='row') 3.4
+                            td Insert your IB2B username and password
+                            td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
+        span(id ="fhirSpan")
+            h5 3. FHIR connector setup
+            br
+            p Note: FHIR connectors are only used through javascript for the momement in Phenoflow
+            br
+            .setUpTable
+                table.table.table-sm
+                    thead
+                        tr
+                        th(scope='col') Step
+                        th(scope='col') What to do ? 
+                        th(scope='col') Check
+                    tbody
+                        tr
+                            th(scope='row') 3.1
+                            td Open the "js" folder inside your phenotype definiton directory
+                            td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
+                        tr
+                            th(scope='row') 3.2
+                            td Open "read-potential-cases-fhir.js" file with a text editor such as atom
+                            td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
+                        tr
+                            th(scope='row') 3.3
+                            td Insert your FHIR endpoint (example : 'http://localhost:8081')
+                            td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
+                        tr
+                            th(scope='row') 3.4
+                            td Insert your FHIR API path (example : "/hapi/fhir")
+                            td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
+        span(id ="omopSpan")
+            h5 3. OMOP connector setup
+            br
+            p Note: OMOR connectors are only used through javascript for the momement in Phenoflow
+            br
+            .setUpTable
+                table.table.table-sm
+                    thead
+                        tr
+                        th(scope='col') Step
+                        th(scope='col') What to do ? 
+                        th(scope='col') Check
+                    tbody
+                        tr
+                            th(scope='row') 3.1
+                            td Open the "js" folder inside your phenotype definiton directory
+                            td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
+                        tr
+                            th(scope='row') 3.2
+                            td Open "read-potential-cases-omop.js" file with a text editor such as atom
+                            td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
+                        tr
+                            th(scope='row') 3.3
+                            td Insert your OHDSI_WEBAPI_ENDPOINT (example : 'http://localhost:8081/WebAPI')
+                            td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
+                        tr
+                            th(scope='row') 3.4
+                            td Insert your database source name (example : 'OHDSI-CDMV5')
+                            td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
         br
         br
+        br
+        span(id ="MAC-OS")
+            h5 4. Run the phenotype
+            .setUpTable
+                table.table.table-sm
+                        thead
+                            tr
+                            th(scope='col') Step
+                            th(scope='col') What to do ? 
+                            th(scope='col') Check
+                        tbody
+                            tr
+                                th(scope='row') 4.1
+                                td Open the terminal (or cmd for Windows)
+                                td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
+                            tr
+                                th(scope='row') 4.2
+                                td Copy the the folder directory
+                                td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
+                            tr
+                                th(scope='row') 4.3
+                                td Write cd followed by a space, then paste the file directory 
+                                td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">
+                            tr
+                                th(scope='row') 4.4
+                                td Write 'cwltool [PhenotypeName].cwl [PhenotypeName]-inputs.yml' (Here if your phenotype name is Acne, the command will be cwltool Acne.cwl Acne-inputs.yml) and press enter.
+                                td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">      
+                            tr
+                                th(scope='row') 4.5
+                                td Find the output in the [PhenotypeName]-cases.csv file
+                                td <input class="form-check-input" type="checkbox" class="custom-checkbox" id="flexCheckDefault">                                  
+        br
+        br
+        br
+
+        script(type='text/javascript', src='/phenoflow/javascripts/setUp.js')
