@@ -219,7 +219,7 @@ function defineValidation(){
           document.getElementById("validationMessage").innerHTML = "The implementation language for file number "+ implementationCounter + " in step number " + counter+ " does not match the file extension !"
           return
         }
-        if(implementationLanguage == "knime" && implementationFileExtension != "knime"){
+        if(implementationLanguage == "knwr" && implementationFileExtension != "knime"){
           document.getElementById("validationMessage").innerHTML = "The implementation language for file number "+ implementationCounter + " in step number " + counter+ " does not match the file extension !"
           return
         }
