@@ -107,9 +107,7 @@ $('#codeListSubmit').on('click',function(){
         data: formData,
         contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
         processData: false, // NEEDED, DON'T OMIT THIS
-        headers: {
-                  "Authorization": "Bearer " + sendIdToken()
-               },
+        headers: {"Authorization": "Bearer " + sendIdToken()},
         async: false,
         success: function(data, textStatus, xhr) {
           if(xhr.status == "500"){
@@ -135,7 +133,7 @@ $('#keyWordsSubmit').on('click',function(){
 
   document.getElementById("keyWordsValidation").innerHTML = ""
   document.getElementById("importCodeListValidationSuccess").innerHTML = ""
-  var form = $('#keyWordsForm')[0]; // You need to use standard javascript object here
+  var form = $('#keyWordsForm')[0]; 
   var formData = new FormData(form);
   formData.append('userName', username)
 
@@ -251,4 +249,89 @@ $('#stepListSubmit').on('click',function(){
           }
         } 
         })
+});
+
+
+$('#connectorSubmit').on('click',function(){
+
+  document.getElementById("connectorValidation").innerHTML = ""
+  document.getElementById("connectorValidationSuccess").innerHTML = ""
+  var form = $('#connectorForm')[0]; // You need to use standard javascript object here
+  var formData = new FormData(form);
+
+
+  if (!formData.get("existingWorkflowIds")){
+    document.getElementById("connectorValidation").innerHTML = "Please enter a phenotype definition ID !"
+    return
+  }
+
+  if (formData.get("dataSource").length == 0){
+    document.getElementById("connectorValidation").innerHTML = "Please enter your data source description !"
+    return
+  }
+
+  if(formData.get("implementationTemplate").size == 0)
+  {
+    document.getElementById("connectorValidation").innerHTML = "Please upload the implementation template"
+    return
+  }
+  else{
+    let fileExtension = formData.get("implementationTemplate").name.split('.').pop()
+    if(!(fileExtension == "py" || fileExtension == "js" || fileExtension == "knwr"))
+    {
+      document.getElementById("connectorValidation").innerHTML = "Your implementation template file does not have a correct extension (Phenoflow only supports python, javascript and KNIME implementation templates"
+      return
+    }
+    else{
+      if(fileExtension == "py"){
+        formData.append('language', "python")
+      }
+      if(fileExtension == "js"){
+        formData.append('language', "js")
+      }
+      if(fileExtension == "knwr"){
+        formData.append('language', "knime")
+      }
+    }
+    
+  }
+  // if(formData.get("steplist").name.split('.').pop() != "")
+
+
+  $.ajax({
+        url: "/phenoflow/importer/addConnector",
+        type: 'POST',
+        data: formData,
+        contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+        processData: false, // NEEDED, DON'T OMIT THIS
+        headers: {
+                  "Authorization": "Bearer " + sendIdToken()
+               },
+        async: false,
+        success: function(data, textStatus, xhr) {
+          if(xhr.status == "500"){
+            document.getElementById("connectorValidation").innerHTML = "Sorry, an error happened !"
+          }
+        },
+        complete: function(xhr, textStatus) {
+          if(xhr.status == "500"){
+            document.getElementById("connectorValidation").innerHTML = "Sorry, an error happened !"
+          }
+          else {
+            document.getElementById("connectorValidationSuccess").innerHTML = "Your external connector was added"
+          }
+        }  
+        })
+});
+
+$('#addWorkflowInput').on('click',function(){
+  $('#workflowIDS').append(`
+  <div>
+    <br />
+    <input class="form-control" type="text" name="existingWorkflowIds" placeholder="Example: 2"  />
+  </div>`);
+});
+
+$('#removeWorfklowInput').on('click',function(){
+  $('#workflowIDS').children().last().remove();
 });
