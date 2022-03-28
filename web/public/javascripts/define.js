@@ -1,3 +1,7 @@
+$('body').on('click', '.remove' , function(){
+  this.parentNode.parentNode.remove()
+})
+
 
 function processInputOutputImplementation(create, stepNode, stepId) {
   let inputDoc = stepNode.getElementsByClassName("inputDoc")[0].value;
@@ -29,6 +33,7 @@ function processStep(create, stepNode, position, workflowId) {
 }
 
 function createOrUpdateWorkflow() {
+  if(defineValidation() == "STOP"){return}
   let workflowId;
   if (window.location.pathname.split("/")[4]) workflowId = window.location.pathname.split("/")[4];
   let workflowName = document.getElementsByClassName("workflowName")[0].value;
@@ -72,8 +77,15 @@ function addStep() {
   let clone = original.cloneNode(true);
 
   //for edit pages
-  for (let msg of clone.getElementsByClassName("impltMsg")) msg.innerHTML = "";
-  for (let desc of clone.getElementsByClassName("impltDesc")) desc.innerHTML = "";
+  let numberOfImplementations = clone.getElementsByClassName("implementation").length
+
+  for(var i = numberOfImplementations-1 ; i > 0; i--){
+    console.log(i)
+    clone.getElementsByClassName("implementation")[0].remove()
+  }
+  for (let msg of clone.getElementsByClassName("implementationFileExisting")) msg.setAttribute("hidden", true)
+
+  clone.getElementsByClassName("remove")[0].style.visibility = "hidden"
 
   clone.id = "step" + ++inputSteps;
   clone.getElementsByClassName("name")[0].value = "";
@@ -84,7 +96,6 @@ function addStep() {
   // clone.getElementsByClassName("outputExtension")[0].value = "";
   for (let implLang of clone.getElementsByClassName("implementationLanguage")) implLang.value = "-";
   clone.getElementsByClassName("implementationLanguage")[0].value = "-";
-  clone.getElementsByClassName("implementationFileExisting")[0].style.display = "none";
   clone.getElementsByClassName("stepRemove")[0].style.display = "inline";
 
   // console.log(clone.getElementsByClassName("")
@@ -123,6 +134,10 @@ function addImplementation(stepInputId) {
   let clone = original.cloneNode(true);
   clone.getElementsByClassName("implementationLanguage")[0].value="-";
   clone.getElementsByClassName("implementationFile")[0].value="";
+  clone.getElementsByClassName("remove")[0].style.visibility = "visible"
+  for(let input of clone.getElementsByTagName("input")) {
+    console.log(input.className)
+    input.className = input.className.split(" ").shift()}
   let implementationFileExisting = clone.getElementsByClassName("implementationFileExisting")?clone.getElementsByClassName("implementationFileExisting")[0]:null;
   if (implementationFileExisting ) implementationFileExisting.remove();
   original.parentNode.appendChild(clone);
@@ -152,12 +167,12 @@ function defineValidation(){
 
     if(!stepName){
       document.getElementById("validationMessage").innerHTML = "Please enter the name of step " + counter + "!";
-      return
+      return "STOP"
     }
 
     if(!stepDescription){
       document.getElementById("validationMessage").innerHTML = "Please enter the description of step " + counter + "!";
-      return
+      return "STOP"
     }
 
 
@@ -168,7 +183,7 @@ function defineValidation(){
 
     if(!stepType){
       document.getElementById("validationMessage").innerHTML = "The type of step " + counter + " is not defined !";
-      return
+      return "STOP"
     }
     else{
       stepTypeList.push(stepType)
@@ -177,53 +192,54 @@ function defineValidation(){
     if (outputExtension != "csv")
     { 
       document.getElementById("validationMessage").innerHTML = "Please enter a correct output extension for step number " + counter;
-      return
+      return "STOP"
     }
     if (outputExtension.length == 0)
     { 
       document.getElementById("validationMessage").innerHTML = "Please enter the step number " + counter + " output extension";
-      return
+      return "STOP"
     }
     if (outputDescription.length == 0)
     { 
       document.getElementById("validationMessage").innerHTML = "Please enter the step number " + counter + " output description";
-      return
+      return "STOP"
     }
     if (inputDescription.length == 0)
     { 
       document.getElementById("validationMessage").innerHTML = "Please enter the step number " + counter + " input description";
-      return
+      return "STOP"
     }
     let implementationCounter = 0;
     for (let implementationNode of step.getElementsByClassName("implementation")) {
       let implementationFileName
       let implementationFileExtension
-
-      implementationCounter++
       let implementationFile = implementationNode.getElementsByClassName("implementationFile")[0].files[0]
-
       let implementationLanguage = implementationNode.getElementsByClassName("implementationLanguage")[0].value
 
-      if(!implementationFile){document.getElementById("validationMessage").innerHTML = "The implementation file number "+ implementationCounter + " for step number " + counter+ " is missing !"
-      return}
-      else {
-        implementationFileName = implementationFile.name
-        implementationFileExtension = implementationFileName.split('.').pop();
-        if(implementationLanguage == "-"){document.getElementById("validationMessage").innerHTML = "The implementation language for file number "+ implementationCounter + " in step number " + counter+ " is missing !"
-        return}
-        if(implementationLanguage == "python" && implementationFileExtension != "py"){
-          document.getElementById("validationMessage").innerHTML = "The implementation language for file number "+ implementationCounter + " in step number " + counter+ " does not match the file extension !"
-          return
-        }
-        if(implementationLanguage == "javascript" && implementationFileExtension != "javascript"){
-          document.getElementById("validationMessage").innerHTML = "The implementation language for file number "+ implementationCounter + " in step number " + counter+ " does not match the file extension !"
-          return
-        }
-        if(implementationLanguage == "knwr" && implementationFileExtension != "knime"){
-          document.getElementById("validationMessage").innerHTML = "The implementation language for file number "+ implementationCounter + " in step number " + counter+ " does not match the file extension !"
-          return
+      implementationCounter++
+      if(implementationNode.getElementsByClassName("implementationFile")[0].className != "implementationFile existing"){
+          if(!implementationFile){document.getElementById("validationMessage").innerHTML = "The implementation file number "+ implementationCounter + " for step number " + counter+ " is missing !"
+          return "STOP"}
+          else {
+          implementationFileName = implementationFile.name
+          implementationFileExtension = implementationFileName.split('.').pop();
+          if(implementationLanguage == "-"){document.getElementById("validationMessage").innerHTML = "The implementation language for file number "+ implementationCounter + " in step number " + counter+ " is missing !"
+          return "STOP"}
+          if(implementationLanguage == "python" && implementationFileExtension != "py"){
+            document.getElementById("validationMessage").innerHTML = "The implementation language for file number "+ implementationCounter + " in step number " + counter+ " does not match the file extension !"
+            return "STOP"
+          }
+          if(implementationLanguage == "javascript" && implementationFileExtension != "javascript"){
+            document.getElementById("validationMessage").innerHTML = "The implementation language for file number "+ implementationCounter + " in step number " + counter+ " does not match the file extension !"
+            return "STOP"
+          }
+          if(implementationLanguage == "knwr" && implementationFileExtension != "knime"){
+            document.getElementById("validationMessage").innerHTML = "The implementation language for file number "+ implementationCounter + " in step number " + counter+ " does not match the file extension !"
+            return "STOP"
         }
       }
+      }
+      
     }
 
   }
@@ -231,14 +247,14 @@ function defineValidation(){
   if (stepTypeList.length != 0){
     //check number of steps
     if(stepTypeList.length < 3){document.getElementById("validationMessage").innerHTML = "A functional phenotype definition must have a minimum of three steps !"
-    return}
+    return "STOP"}
     else{
       //check first step type
       if(!((stepTypeList[0] == "load") || (stepTypeList[0] == "external"))){document.getElementById("validationMessage").innerHTML = "The first step must of type load or external!"
-      return}
+      return "STOP"}
       //check last step type
       if(stepTypeList[stepTypeList.length-1] != "output"){document.getElementById("validationMessage").innerHTML = "The last step must of type output!" 
-      return}
+      return "STOP"}
 
       //check other steps
       middleStepTypeList = stepTypeList.slice()//copy complete list
@@ -248,22 +264,21 @@ function defineValidation(){
         if(!((middleStep == "logic") ||(middleStep == "boolean")))
         {
           document.getElementById("validationMessage").innerHTML = "The middle steps must be either of a boolean or logic type !"
-          return
+          return "STOP"
         }
       }
     }
   }
   if (phenotyeDescription.length == 0){
     document.getElementById("validationMessage").innerHTML = "Please enter a phenotype description";
-    return
+    return "STOP"
   }
   if (phenotypeName.length == 0){
     document.getElementById("validationMessage").innerHTML = "Please enter a phenotype name";
-    return
+    return "STOP"
   }
 
   document.getElementById("validationMessageSuccess").innerHTML = "The phenotype definition was saved !";
 
 }
-
 
