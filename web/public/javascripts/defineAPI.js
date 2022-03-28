@@ -328,7 +328,7 @@ $('#addWorkflowInput').on('click',function(){
   $('#workflowIDS').append(`
   <div>
     <br />
-    <input class="form-control" type="text" name="existingWorkflowIds" placeholder="Example: 2"  />
+    <input class="form-control" type="text" name="existingWorkflowIds"/>
   </div>`);
 });
 
