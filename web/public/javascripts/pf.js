@@ -7,6 +7,7 @@ function sendPostRequest(endpoint, body, callback, contentType='application/json
   xhr.onreadystatechange = function() {
     if(xhr.readyState === XMLHttpRequest.DONE) {
       var status = xhr.status;
+      console.log(xhr.response)
       if (status === 0 || (status >= 200 && status < 400)) {
         callback(xhr.response);
       } else {
@@ -18,11 +19,13 @@ function sendPostRequest(endpoint, body, callback, contentType='application/json
   xhr.send(body);
 }
 
-function workflow(url, name, author, about, callback=function(response){}) { sendPostRequest(url, JSON.stringify({"name": name, "author": author, "about": about}), callback); }
+function workflow(url, name, userName, about, callback=function(response){}) { 
 
-function createWorkflow(name, author, about, callback=function(response){}) { workflow("phenotype/new", name, author, about, callback); }
+  sendPostRequest(url, JSON.stringify({"name": name, "userName": userName, "about": about}), callback); }
 
-function updateWorkflow(id, name, author, about, callback=function(response){}) { workflow("phenotype/update/" + id, name, author, about, callback); }
+function createWorkflow(name, userName, about, callback=function(response){}) { workflow("phenotype/new", name, userName, about, callback); }
+
+function updateWorkflow(id, name, userName, about, callback=function(response){}) { workflow("phenotype/update/" + id, name, userName, about, callback); }
 
 function step(workflowId, position, name, doc, type, callback) { sendPostRequest("step/" + workflowId + "/" + position, JSON.stringify({"name": name, "doc": doc, "type": type}), callback); }
 
