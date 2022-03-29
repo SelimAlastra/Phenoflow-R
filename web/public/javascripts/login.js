@@ -16,6 +16,7 @@ function setSession(authResult) {
 
 function logout() {
 
+  localStorage.removeItem("user")
   localStorage.removeItem("id_token");
   localStorage.removeItem("expires_at");
   for(let authentication of document.getElementsByClassName("authentication")) authentication.style.display = "inherit";

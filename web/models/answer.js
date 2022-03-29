@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   answer.init({
     content: {type : DataTypes.STRING, allowNull : false},
-    author: {type : DataTypes.STRING, allowNull : false}
+    author: {type : DataTypes.STRING, allowNull : false},
+    verifiedAuthor: {type: DataTypes.BOOLEAN, allowNull: false}
   }, {
     sequelize,
     modelName: 'answer',
