@@ -108,11 +108,14 @@ router.get("/post/:id", async function(req, res) {
 
 router.post("/post/:id",(req, res) => {
 
-  let {content,author} = req.body
+  let {content,author,verifiedAuthor} = req.body
+  
+  res.send(req.body.user)
 
   models.answer.create({
     content,
     author,
+    verifiedAuthor,
     postId : req.params.id
   }).then(answer => res.redirect("/phenoflow/forum/post/" + req.params.id ))
   .catch(err => console.log(err))

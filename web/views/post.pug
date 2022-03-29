@@ -4,6 +4,7 @@ block content
     
     script(type='text/javascript', src='/phenoflow/javascripts/timeSince.js')
 
+        
     .container.centerContainer
         a(href= "/phenoflow/forum").modalBtn &larr;  Go back to FORUM
     br
@@ -36,7 +37,7 @@ block content
                             button.close(type='button' data-dismiss='modal' aria-label='Close')
                                 span(aria-hidden='true') x
                         .modal-body
-                            form.needs-validation#frm(method = "POST" novalidate='')
+                            form.needs-validation#answerForm(onsubmit="return false")
                                 .form-group
                                     label(for='formControlInput1') Answer
                                     br
@@ -52,7 +53,8 @@ block content
                                         | Please insert your name.
                                     br
                                 .container.centerContainer
-                                    button.btn.btn-outline-success.formBtn(type='submit') Submit
+                                    input(id = "user" name = "user" hidden)
+                                    button.btn.btn-outline-success.formBtn(id = "submitAnswer") Submit
     hr
     h4 Answers 
     hr
@@ -61,6 +63,9 @@ block content
         if(answers.length == 0)
             container.centerContainer
                 h6 There are no answers to this post, be the first one !
+                br
+                br
+                br
 
     each answer in answers
         .card
@@ -70,6 +75,8 @@ block content
                     | #{answer.content}
                 footer.blockquote-footer
                     | by #{answer.author}
+                    if answer.verifiedAuthor == true
+                        p.verifiedAuthor Phenoflow verified author
                     p
                     p(id = answer.id)
                 a(onClick = "deleteAnswer(" + answer.id + "," + answer.postId + ")" class = "deletePost restricted").deletePostBtn
@@ -78,16 +85,20 @@ block content
         
         script.
             document.getElementById("#{answer.id}").innerHTML = timeSince(new Date("#{answer.createdAt}" )) + " ago"
-
         br
-
     
     script.
         document.getElementById("timeAgo").innerHTML = timeSince(new Date("#{post.createdAt}" )) + " ago"
 
+    script.
+        function answerLocalStorage(){
+            let user = localStorage.getItem('user')
+            document.getElementById("user").value = user
+            console.log(document.getElementById("user").value)
+        }
 
-    script(type='text/javascript', src='/phenoflow/javascripts/deleteAnswer.js')
-    script(type='text/javascript', src='/phenoflow/javascripts/deletePost.js')
+
+    script(type='text/javascript', src='/phenoflow/javascripts/post.js')
     script(type='text/javascript', src='/phenoflow/javascripts/formValidation.js')
 
 

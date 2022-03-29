@@ -428,3 +428,7 @@ input[type=radio]:checked + label>div {
   visibility: hidden;
   margin: 10px;
 }
+
+.verifiedAuthor{
+  color: #1b583e;
+}
