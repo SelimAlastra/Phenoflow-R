@@ -53,7 +53,8 @@ const Workflow = require('../util/workflow');
  *       200:
  *         description: Definition added.
  */
-router.post('/importCodelists', jwt({secret:config.get("jwt.RSA_PRIVATE_KEY"), algorithms:['RS256']}), async function(req, res, next) {  req.setTimeout(0);
+router.post('/importCodelists', jwt({secret:config.get("jwt.RSA_PRIVATE_KEY"), algorithms:['RS256']}), async function(req, res, next) {
+  req.setTimeout(0);
   if(req.files&&req.files.csvs) {
     let zip;
     try { 
@@ -66,12 +67,11 @@ router.post('/importCodelists', jwt({secret:config.get("jwt.RSA_PRIVATE_KEY"), a
     for(let entry of zip.getEntries()) req.body.csvs.push({"filename":entry.entryName, "content":await parse(entry.getData().toString())});
     let uniqueCSVs = req.body.csvs.filter(({filename}, index)=>!req.body.csvs.map(csv=>csv.filename).includes(filename, index+1));
     req.body.about = req.body.about+" - "+ImporterUtils.hash(uniqueCSVs.map(csv=>csv.content));
-    // res.send(req.body.csvs)
   }
   if(!req.body.csvs||!req.body.name||!req.body.about||!req.body.userName) res.status(500).send("Missing params.");
   try {
-    if(await Importer.importLists(req.body.csvs, req.body.name, req.body.about, req.body.userName, ImporterUtils.getValue, ImporterUtils.getDescription, "code")) res.sendStatus(200);
-    else return res.sendStatus(200);
+    if(await Importer.importLists(req.body.csvs, req.body.name, req.body.about, req.body.userName, ImporterUtils.getValue, ImporterUtils.getDescription, "code")) return res.sendStatus(200);
+    else return res.sendStatus(500);
   } catch(importListsError) {
     logger.error(importListsError);
     return res.sendStatus(500);
@@ -173,9 +173,7 @@ router.post('/importKeywordList', jwt({secret:config.get("jwt.RSA_PRIVATE_KEY"),
  *       200:
  *         description: Definition added
  */
-
 router.post('/importSteplist', jwt({secret:config.get("jwt.RSA_PRIVATE_KEY"), algorithms:['RS256']}), async function(req, res, next) {
-
   req.setTimeout(0);
   if(req.files&&req.files.steplist&&req.files.csvs) {
     req.body.steplist = {"filename":req.files.steplist.name, "content":await parse(req.files.steplist.data.toString())};

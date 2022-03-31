@@ -16,7 +16,7 @@ $('#submitAnswer').on('click',function(){
     var user = localStorage.getItem("user");
     var form = $('#answerForm')[0]; // You need to use standard javascript object here
     var formData = new FormData(form);
-    console.log(user)
+
     if (user){
         formData.append("verifiedAuthor", true)
     }
@@ -24,6 +24,10 @@ $('#submitAnswer').on('click',function(){
         formData.append("verifiedAuthor", false)
     }
     let paramId = window.location.href.split("/").pop()
+
+    if (!formData.get("content") || !formData.get("author")){
+        return
+    }
 
 
     $.ajax({
