@@ -7,7 +7,7 @@ mixin createImplementation(currentLanguage, languages, fileName=null)
       if fileName
         h7.impltMsg Old file name: #{fileName} [Upload a new file if you want to replace it]
     div
-      button.btn.btn-outline-success.defineNavBtn.removeImplt(class= 'remove')
+      button.btn.btn-outline-info.defineNavBtn.removeImplt(class= 'remove')
         svg.bi.bi-trash(xmlns='http://www.w3.org/2000/svg' width='15' height='15' fill='currentColor' viewBox='0 0 16 16')
           path(d='M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z')
           path(fill-rule='evenodd' d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z')
@@ -88,7 +88,7 @@ mixin createStep(position, name, doc, type, inputDoc, outputDoc, outputExtension
         +input("step" + position, "outputExtension", "Extension", outputExtension)
     div(class="row stepRemove" style=(position==1?"display: none;":""))
       .container.centerContainer
-        button.btn.btn-outline-success(onclick="logDeletedStep(this); return false;" style="margin: 0px;") Remove this step
+        button.btn.btn-outline-info(onclick="logDeletedStep(this); return false;" style="margin: 0px;") Remove this step
 
 block pageJS
   script(src="/phenoflow/javascripts/define.js")
@@ -99,7 +99,7 @@ block header
   form(class="form-inline restricted")
     +input("", "workflowName", "Name", workflow&&workflow.name?workflow.name:"").defineNavInput
     +input("", "workflowAbout", "About", workflow&&workflow.about?workflow.about:"").defineNavInput
-    button.btn.btn-outline-success.defineNavBtn(onclick="createOrUpdateWorkflow(); return false;"  style="margin: 10px;")
+    button.btn.btn-outline-info.defineNavBtn(onclick="createOrUpdateWorkflow(); return false;"  style="margin: 10px;")
       | SAVE
 
 block content
@@ -112,7 +112,6 @@ block content
       .custom-control.custom-switch
         input#advancedParamsSwitch.custom-control-input(type='checkbox'  data-toggle='collapse' href='#collapseHelp' role='button' aria-expanded='false' aria-controls='collapseExample')
         label.custom-control-label(for='advancedParamsSwitch') Display help section
-    br
     br
     #collapseHelp.collapse
       #accordionExample.accordion
@@ -161,13 +160,51 @@ block content
               .card-body
                   br
                   p For local CSV reads, the load step should be selection. However, for connectors such as IB2B, OMOP or FHIR, steps of type "external" should be used.
+        .card
+            #headingSix.card-header
+              h2.mb-0
+                button.btn.btn-link.btn-block.text-left(type='button' data-toggle='collapse' data-target='#collapse6' aria-expanded='false' aria-controls='collapseOne')
+                  | What types of logical/boolean steps does Phenoflow support ? 
+            #collapse6.collapse(aria-labelledby='headingSix' data-parent='#accordionExample')
+              .card-body
+                  br
+                  table.table.table-sm
+                    thead
+                        tr
+                        th(scope='col') #
+                        th(scope='col') Logical step
+                        th(scope='col') Description
+                    tbody
+                        tr
+                          th(scope='row') 1
+                          td Code list
+                          td The patient will be identified as a case if they detains N code from the referenced code list 
+                    tbody
+                        tr
+                          th(scope='row') 2
+                          td Code list exclude
+                          td The patient will be excluded if they have one or more codes from the referenced code lis
+                    tbody
+                        tr
+                          th(scope='row') 3
+                          td Age
+                          td The patient will be excluded if they do not belong to a specific age range
+                    tbody
+                        tr
+                          th(scope='row') 4
+                          td Last encounter
+                          td The patient will be excluded if their last encounter date was greater than a certain number of years
+                    tbody
+                        tr
+                          th(scope='row') 5
+                          td Code list temporals
+                          td A step that identifies a case if a patient has a diagnosis from a specific code list within a certain amount of time
 
-    br
     br
     container.centerContainer
       h4#validationMessage.validationMessage
-      h4#validationMessageSuccess.successValidationMessage
-    br
+      h4#validationMessageSuccess.infoValidationMessage
+    
     div(class="container")
       div(id="steps")
         if workflow && workflow.steps && workflow.steps[0]
@@ -178,7 +215,7 @@ block content
     br
     div(class="row justify-content-center")
       a(onclick="addStep(); return false;" style="margin: 10px;")
-        button.btn.btn-outline-success Add new step
+        button.btn.btn-outline-info Add new step
   br
   br
   script(type='text/javascript', src='/phenoflow/javascripts/define.js')
