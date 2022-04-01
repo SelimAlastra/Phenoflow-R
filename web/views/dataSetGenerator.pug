@@ -7,7 +7,48 @@ block content
             br
             p Welcome to the data set generator, on this page you will have the ability to generate easily a data set by only inserting the codes required for a specific phenotype workflow.
             hr
+            h4 Required format for local data-sets
+            hr
+            p Phenoflow require local data-sets having a CSV extension following this format:
+            table.table.table-sm
+                thead
+                    tr
+                    th(scope='col') patient-id
+                    th(scope='col') dob
+                    th(scope='col') codes
+                    th(scope='col') last-encounter
+                tbody
+                    tr
+                        th(scope='row') 1
+                        td yyyy-mm-dd
+                        td (code1,yyyy-mm-dd),(code2,yyyy-mm-dd) ..., (codeN,yyyy-mm-dd)
+                        td yyyy-mm-dd
+                tbody
+                    tr
+                        th(scope='row') 2
+                        td yyyy-mm-dd
+                        td (code1,yyyy-mm-dd),(code2,yyyy-mm-dd), ..., (codeN,yyyy-mm-dd)
+                        td yyyy-mm-dd
+                tbody
+                    tr
+                        th(scope='row') ...
+                        td ...
+                        td ...
+                        td ...
+                tbody
+                    tr
+                        th(scope='row') n
+                        td yyyy-mm-dd
+                        td (code1,yyyy-mm-dd),(code2,yyyy-mm-dd), ..., (codeN,yyyy-mm-dd)
+                        td yyyy-mm-dd
             br
+            p Note 1: Replace code1, code2, codeN by the actual code
+            p Note 2: The date next to a specific code represents the the date when the code was identified for the patient
+            hr
+            h4 Generate your data-set !
+            hr
+
+
             form.needs-validation#frm(novalidate='' onsubmit="return false")
                 .form-group
                     p.warningP Please separate each code with a white space !! 
@@ -98,13 +139,13 @@ block content
 
                 br
                 .container.centerContainer
-                    button(onclick='fillTable()').btn.btn-outline-success.formBtn(type='submit') Try it !
+                    button(onclick='fillTable()').btn.btn-outline-info.formBtn(type='submit') Try it !
         
 
             .container.centerContainer
                 br
                 h5#errorMessage.errorMessage
-                button#btnExportToCsv.btn.btn-outline-success(type='button' class = "exporterButton") Export to CSV
+                button#btnExportToCsv.btn.btn-outline-info(type='button' class = "exporterButton") Export to CSV
 
             br     
             br  

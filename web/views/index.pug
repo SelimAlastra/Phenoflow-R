@@ -2,76 +2,150 @@ extends layout
 
 block preheader
   .container.preheaderContainer
-    h2.pageTitle(style="margin-top: 200px") #{title}
-    a.btn.btn-outline-success.homePageBtn(href="/phenoflow/phenotype/download") VIEW AN EXAMPLE
-
+    br
+    br
+    br
+    br
+    h1.homePageTitle Phenoflow
+    h5.homePageTitle Experience the next generation phenotype library
+    br
 
 block content
 
   hr
-  h2 How do we achieve phenotype portability?
+  h4 Motivation
+  hr
+  p Nowadays, converting information into a digital format is more and more frequent. This process is called "digitization". The leading causes for such phenomena are easier access, integration inside automated systems and better data quality. This process is impacting multiple domains, including healthcare. As a result, electronic health records (EHR) increased significantly. For example, the 2014 National Physician Survey results showed that 75% of physicians now use EHRs. In addition, 65% of those revealed that patient care improved, and only less than 5% indicated a negative effect following the implementation of electronic data. Furthermore, EHR became the primary source for medical cohort research studies. In fact, in order to identify these cohorts, EHR based phenotypes, also known as phenotyping algorithms became incredibly reliant. However, ensuring a precise and effective extraction of cohorts is not simple. Phenotypes definitions must be of high-quality and portable.
+  br
+  hr
+  h4 Phenoflow model
+  hr
+  p In order to address and attain the high-quality standards, the Phenoflow website introduced a novel phenotype definition model. This ”structured” model was inspired by the various ”experiences of initiatives such as the UK eScience and US cyberinfrastructure programmes”. This model consists of three layers: ”abstract”, ”functional” and ”computational”.
+  .centerContainer
+    img(src="/phenoflow/images/stepDiagram.png").modelImg
+  br
+  hr
+  h4 Why does phenotype portability matter?
   hr
   br
+  .centerContainer
+    #carouselExampleCaptions.carousel.slide(data-ride='carousel')
+      ol.carousel-indicators
+        li.active(data-target='#carouselExampleCaptions' data-slide-to='0')
+        li(data-target='#carouselExampleCaptions' data-slide-to='1')
+        li(data-target='#carouselExampleCaptions' data-slide-to='2')
+      .carousel-inner
+        .carousel-item.active
+          img.d-block.w-100.carouselIMG(width="40%" src="/phenoflow/images/Re-USE.png")
+          //- .carousel-caption.d-none.d-md-block
+          //-   h5 First slide label
+          //-   p Nulla vitae elit libero, a pharetra augue mollis interdum.
+        .carousel-item
+          img.d-block.w-100.carouselIMG(width="40%" src="/phenoflow/images/Reproducibility.png" )
+          //- .carousel-caption.d-none.d-md-block
+          //-   h5 Second slide label
+          //-   p Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        .carousel-item
+          img.d-block.w-100.carouselIMG(width="40%" src="/phenoflow/images/Validation.png")
+          //- .carousel-caption.d-none.d-md-block
+          //-   h5 Third slide label
+          //-   p Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+      a.carousel-control-prev(href='#carouselExampleCaptions' role='button' data-slide='prev')
+        span.carousel-control-prev-icon(aria-hidden='true')
+        span.sr-only Previous
+      a.carousel-control-next(href='#carouselExampleCaptions' role='button' data-slide='next')
+        span.carousel-control-next-icon(aria-hidden='true')
+        span.sr-only Next
 
-  div(class="container" style="margin-top: 20px;")
-    div(class="row align-items-center")
-      div(class="col")
-        a(href="/phenoflow/phenotype/all/")
-          img(src="/phenoflow/images/run.png" class="box").indexImg
-      div(class="col index-box")
-        | Download and immediately execute a phenotype against a local dataset.
-    div(class="row")
-      div()
-        | &nbsp;
-    div(class="row align-items-center")
-      div(class="col")
-        a(href="/phenoflow/phenotype/all/")
-          img(src="/phenoflow/images/view.png" class="box").indexImg
-      div(class="col index-box")
-          | Browse phenotypes represented in a standard format. <a href="/phenoflow/phenotype/all/">#{count}</a> phenotypes are currently available.
-    div(class="row")
-      div()
-        | &nbsp;
-    div(class="row align-items-center")
-      div(class="col")
-        a(href="/phenoflow/phenotype/all/")
-          img(src="/phenoflow/images/custom.png" class="box").indexImg
-      div(class="col index-box")
-        | Find and customise existing phenotypes, for local requirements.
-    div(class="row")
-      div()
-        | &nbsp;
-    div(class="row align-items-center")
-      div(class="col")
-        a(href="/phenoflow/phenotype/define")
-          img(src="/phenoflow/images/define.png" class="box").indexImg
-      div(class="col index-box")
-        | Graphically author new phenotypes.
-    div(class="row d-flex align-items-center")
-      div(class="col d-flex align-items-center")
-        p
-          | Phenotype execution only has two dependencies: <a href="https://github.com/common-workflow-language/cwltool">cwltool</a> and <a href="https://docs.docker.com/get-docker/">docker</a>.
-        p
-          img(src="/phenoflow/images/run.gif").gif
+  br
+  hr
+  h4 How do we achieve phenotype portability?
+  hr
+  br
+  .row.align-items-center
+    .col 
+      .centerContainer
+        h5 Browse phenotypes represented in a standard format. <a href="/phenoflow/phenotype/all/">#{count}</a> phenotypes are currently available.
+    .col
+      .centerContainer
+        img(src="/phenoflow/images/view.png" class="box").indexImg
+    .w-100
+    .col 
+      .centerContainer
+        h5 Download and immediately execute a phenotype against a local dataset.
+    .col
+      .centerContainer
+        img(src="/phenoflow/images/run.png" class="box").indexImg
+    .w-100
+    .col 
+      .centerContainer
+        h5 Find and customise existing phenotypes, for local requirements.
+    .col
+      .centerContainer
+        img(src="/phenoflow/images/custom.png" class="box").indexImg
+    .w-100
+    .col
+      .centerContainer
+        h5 Phenotype execution only has two dependencies: <a href="https://github.com/common-workflow-language/cwltool">cwltool</a> and <a href="https://docs.docker.com/get-docker/">docker</a>.
+    .col
+      .centerContainer
+        img(src="/phenoflow/images/run.gif" class="box").indexImg
+    .w-100
+    .col 
+      .centerContainer
+        h5 Graphically define and edit phenotypes by joining the Phenoflow team <a href="/phenoflow/contactUs/joinUs">here</a>.
+    .col
+      .centerContainer
+        img(src="/phenoflow/images/define.png" class="box").indexImg
+    .w-100
+    .col 
+      .centerContainer
+        h5 Import phenotype definitions
+    .col
+      .centerContainer
+        img(src="/phenoflow/images/import.png" class="box").indexImg
+
+  br
+  hr
+  h4 What type of logical steps does Phenoflow support? 
+  hr
+  br
+  table.table.table-sm
+    thead
+        tr
+        th(scope='col') #
+        th(scope='col') Logical step
+        th(scope='col') Description
+    tbody
+        tr
+          th(scope='row') 1
+          td Code list
+          td The patient will be identified as a case if they detains N code from the referenced code list 
+    tbody
+        tr
+          th(scope='row') 2
+          td Code list exclude
+          td The patient will be excluded if they have one or more codes from the referenced code lis
+    tbody
+        tr
+          th(scope='row') 3
+          td Age
+          td The patient will be excluded if they do not belong to a specific age range
+    tbody
+        tr
+          th(scope='row') 4
+          td Last encounter
+          td The patient will be excluded if their last encounter date was greater than a certain number of years
+    tbody
+        tr
+          th(scope='row') 5
+          td Code list temporals
+          td A step that identifies a case if a patient has a diagnosis from a specific code list within a certain amount of time
+
   
-  hr
-  h2 Why does phenotype portability matter?
-  hr
-  br
 
 
-  h4 Re-use
-  hr
-  p Re-defining phenotypes at new sites may lead to inconsistent definitions. Instead, we want to be able to port definitions between sites, as facilitated by Phenoflow. This is not to say a single gold standard algorithm is required for each disease, but instead different algorithms should be semantically interoperable. The level of abstraction provided by Phenoflow also ensures this.
-  br
-  h4 Reproducibility
-  hr
-  p With the extraction of phenotype cohorts now forming a key part of many research methodologies, the mechanism used to derive a cohort within a given study needs to be reusable in order to ensure reproducibility and thus incremental research. The reusable definitions hosted within Phenoflow enable this research.
-  br
-  h4 Validation
-  hr
-  p Trust in a phenotype definition is increased by validating it against multiple data sources, such as EHR repositories. By integrating with multiple data source formats, such as i2b2 and OMOP, Phenoflow enables this validation to take place.
-  br
+
   
   div(class="container" style="margin-top: 20px;")
     div(class="row")

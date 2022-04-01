@@ -1,9 +1,9 @@
 .navbar-light .navbar-brand {
-
+    
     font-weight: bolder;
     font-size: 38px;
     -webkit-text-fill-color: white;
-    -webkit-text-stroke-color: #34BE82;
+    -webkit-text-stroke-color: #17a2b8;
     -webkit-text-stroke-width: 1.20px; 
     margin-left: 15px;
 }
@@ -13,7 +13,7 @@
     font-weight: bolder;
     font-size: 38px;
     -webkit-text-fill-color: rgb(216, 216, 216);
-    -webkit-text-stroke-color: #34BE82;
+    -webkit-text-stroke-color: #17a2b8;
     -webkit-text-stroke-width: 1.2px; 
     margin-left: 15px;
 }
@@ -33,7 +33,11 @@
 }
 
 .navbar {
-    background-color: #34BE82;
+    background-color: #17a2b8;
+}
+
+.navbar.fixed-top.navbar-expand-custom.navbar-light{
+    border: 0.7px solid rgb(27, 27, 27);
 }
 
 @media (min-width: 1250px){

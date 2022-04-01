@@ -3,12 +3,12 @@ div(class="container" style="padding-top: 20px;")
     form.needs-validation#frm(novalidate='' onsubmit="return false")
         .input-group.workflowSearchbar
             input#searchInput.form-control(type='text' placeholder='Worfklow name, description, code, author...' name = "searchInput" required ="").searchBarInput
-            button.btn.btn-outline-success.searchBTN(type='submit' onclick='searchWorkflow()').searchBarBtn Search
+            button.btn.btn-outline-info.searchBTN(type='submit' onclick='searchWorkflow()').searchBarBtn Search
             .invalid-feedback
                 | Please insert something.
-  br
-  .container.centerContainer
-      a.btn.btn-outline-success.searchBTN(href= "/phenoflow/phenotype/all")#cancelSearchBtn Cancel Search
+
+  .container.centerContainer.searchContainer
+      a.btn.btn-outline-info.searchBTN(href= "/phenoflow/phenotype/all")#cancelSearchBtn Cancel Search
 
   script.
     url_string = window.location.href;
@@ -16,7 +16,6 @@ div(class="container" style="padding-top: 20px;")
     var arg = url.searchParams.get("arg");
     if(!arg){document.getElementById("cancelSearchBtn").style.visibility = "hidden";}
 
-  br
   each workflow in workflows
     span(class="workflow " + workflow.userName)
       div(class="row")

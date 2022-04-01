@@ -8,13 +8,13 @@ block content
         h3.pageTitle Upload phenotype definitions through the API
         .container.centerContainer
             h5 You can add a phenotype through this link by using Phenoflow endpoints with Swagger 
-            a(href = "/phenoflow/docs/#/").btn.btn-outline-success.defineBtn Add through Swagger
+            a(href = "/phenoflow/docs/#/").btn.btn-outline-info.defineBtn Add through Swagger
             br
             p Note: It is recommended to use the endpoints provided directly on Phenoflow
             hr
             h6 If you decide to use Swagger to add phenotype definitions or connetors, you will need an ID token in order to do that.
             p Click on the button bellow to get your ID token. Please do not share this token with anyone.
-            button.btn.btn-outline-success(onClick = "getIdToken()") Get your ID token
+            button.btn.btn-outline-info(onClick = "getIdToken()") Get your ID token
             br
             br
             .container.idContainer
@@ -34,7 +34,7 @@ block content
                         br
                         h5 Note: We recommend writing the CSV files with editors such as atom. CSV editors such as excel may write the file in an unwanted format.
                         br
-                        p - If the primary logic of a definition is to identify one or more codes from one or more codelists, these lists can be submitted directly to the Phenoflow library, which will further segment the codes in each list into logical groups (each of which is represented by an individual step) to increase intelligibility. 
+                        p - If the primay logic of a definition is to identify one or more codes from one or more codelists, these lists can be submitted directly to the Phenoflow library, which will further segment the codes in each list into logical groups (each of which is represented by an individual step) to increase intelligibility. 
                         p - If any steps identify a patient as being a case (i.e. the patient has one of the codes it stores), then we consider the patient to have the condition, i.e. there is a disjunction relationship between steps. 
                         p - The library expects the codes in each list to all belong to the same coding system and expects this system to be indicated in the filename using the following naming convention: <code class="code"> phenotype-name_system </code>(e.g. <code class ="code"> abdominal-aortic-aneurysm_icd </code>).
                         p - The content of the codelists themselves can vary; Phenoflow supports a variety of common ways to structure codelists, broadly with a column containing the codes themselves, and a description column providing more detail on each code.
@@ -89,10 +89,10 @@ block content
 
             p Note: For MACOS users, make sure to delete the "__MACOSX" folder inside the zip file. This can be done by running this command on the terminal:  zip -d filename.zip __MACOSX/\*
             h6.validationMessage#importCodeListValidation
-            h5.successValidationMessage#importCodeListValidationSuccess
+            h5.infoValidationMessage#importCodeListValidationSuccess
 
             .container.centerContainer
-                button.btn.btn-outline-success.defineNavBtn(style="margin: 10px;" id="codeListSubmit") SUBMIT
+                button.btn.btn-outline-info.formBtn(style="margin: 10px;" id="codeListSubmit") SUBMIT
 
         hr
         h5 Create a phenotype definition based upon a list of keywords
@@ -160,7 +160,7 @@ block content
             h6.validationMessage#keyWordsValidation
             h5.successValidationMessage#keyWordsValidationSuccess
             .container.centerContainer
-                button.btn.btn-outline-success.defineNavBtn(style="margin: 10px;" id= "keyWordsSubmit" ) SUBMIT
+                button.btn.btn-outline-info.formBtn(style="margin: 10px;" id= "keyWordsSubmit" ) SUBMIT
         
 
         hr
@@ -382,6 +382,45 @@ block content
                         code.code branch,branch-a.csv
                         br
                         code.code codelist,listB_system.csv:1
+            .card
+                #headingLogic.card-header
+                    h2.mb-0
+                        button.btn.btn-link.btn-block.text-left(type='button' data-toggle='collapse' data-target='#collapseLogic' aria-expanded='false' aria-controls='collapseOne')
+                            | What types of logical steps does Phenoflow support ? 
+                #collapseLogic.collapse(aria-labelledby='headingLogic' data-parent='#accordionExample')
+                    .card-body
+                        br
+                        table.table.table-sm
+                            thead
+                                tr
+                                th(scope='col') #
+                                th(scope='col') Logical step
+                                th(scope='col') Description
+                            tbody
+                                tr
+                                th(scope='row') 1
+                                td Code list
+                                td The patient will be identified as a case if they detains N code from the referenced code list 
+                            tbody
+                                tr
+                                th(scope='row') 2
+                                td Code list exclude
+                                td The patient will be excluded if they have one or more codes from the referenced code lis
+                            tbody
+                                tr
+                                th(scope='row') 3
+                                td Age
+                                td The patient will be excluded if they do not belong to a specific age range
+                            tbody
+                                tr
+                                th(scope='row') 4
+                                td Last encounter
+                                td The patient will be excluded if their last encounter date was greater than a certain number of years
+                            tbody
+                                tr
+                                th(scope='row') 5
+                                td Code list temporals
+                                td A step that identifies a case if a patient has a diagnosis from a specific code list within a certain amount of time
 
 
 
@@ -415,7 +454,7 @@ block content
             h5.successValidationMessage#stepListValidationSuccess
 
             .container.centerContainer
-                button.btn.btn-outline-success.defineNavBtn(id= 'stepListSubmit' style="margin: 10px;") SUBMIT
+                button.btn.btn-outline-info.formBtn(id= 'stepListSubmit' style="margin: 10px;") SUBMIT
 
         hr
         h5 Add a new connector to an existing phenotype definition
@@ -455,8 +494,8 @@ block content
                     label(for='name') The phenotypes workflow IDs
                     input.form-control(type='text' name='existingWorkflowIds'  placeholder='Example: 1' ) 
             br
-            button.btn.btn-outline-success.defineNavBtn(id = "addWorkflowInput" style="margin: 10px;") Add new workflow
-            button.btn.btn-outline-success.defineNavBtn(id = "removeWorfklowInput" style="margin: 10px;") Remove last workflow 
+            button.btn.btn-outline-info.formBtn(id = "addWorkflowInput" style="margin: 10px;") Add new workflow
+            button.btn.btn-outline-info.formBtn(id = "removeWorfklowInput" style="margin: 10px;") Remove last workflow 
             br
             br
             br
@@ -472,9 +511,7 @@ block content
             p.successValidationMessage#connectorValidationSuccess
 
             .container.centerContainer
-                button.btn.btn-outline-success.defineNavBtn(id= 'connectorSubmit' style="margin: 10px;") SUBMIT
-        br
-        br
+                button.btn.btn-outline-info.formBtn(id= 'connectorSubmit' style="margin: 10px;") SUBMIT
         br
         br
 
