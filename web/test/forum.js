@@ -39,14 +39,24 @@ describe("forum", () => {
         res.should.have.status(200)
     }).timeout(0);
 
-    it("[F4] Should be able to remove a post", async() => {
+    it("[F4] Should be able to remove an answer", async() => {
+        let post = await models.post.findOne({order: [ [ 'id', 'DESC' ]]});
+        // find last post
+        let postId = post.id
+        let answer = await models.answer.findOne({order: [ [ 'id', 'DESC' ]]});
+        let answerId = answer.id
+        
+        let res = await chai.request(testServerObject).get("/phenoflow/forum/post/removeAnswer/" + answerId + "/" + postId)
+        res.should.have.status(200)
+    }).timeout(0);
+
+    it("[F5] Should be able to remove a post", async() => {
         let post = await models.post.findOne({order: [ [ 'id', 'DESC' ]]});
         // find last post
         let postId = post.id
         let res = await chai.request(testServerObject).get("/phenoflow/forum/remove/" + postId)
         res.should.have.status(200)
     }).timeout(0);
-
 
 
 
