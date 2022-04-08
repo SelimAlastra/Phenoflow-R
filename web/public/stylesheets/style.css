@@ -460,4 +460,5 @@ input[type=radio]:checked + label>div {
 
 .modelImg{
   margin: 10px;
+  width: 65vw;
 }
