@@ -1,4 +1,4 @@
-// As this page was using javascript functions, they were retaken to be tested.
+// As this page was using javascript functions, they were retaken and adpated to be tested.
 
 const chai = require("chai");
 chai.use(require("chai-http"));
