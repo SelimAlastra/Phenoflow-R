@@ -620,9 +620,12 @@ web/templates/read-potential-cases-gstt.py
 web/views/analytics.pug
 scripts/
 
+venv/
+env/
 nenv/
 
 !requirements.txt
 !README.txt
 !logo.png
 !architecture.png
+web/cypress.json
